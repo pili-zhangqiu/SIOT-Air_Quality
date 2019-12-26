@@ -1,7 +1,3 @@
-**DEPRECATED LIBRARY. Adafruit Python ADS1x15**
+**Sensing & IoT - Air Quality Device Project**
 
-This library has been deprecated! We are leaving this up for historical and research purposes but archiving the repository.
-
-We are now only supporting the use of our CircuitPython libraries for use with Python.
-
-Check out this guide for info on using character LCDs with the CircuitPython library: https://github.com/adafruit/Adafruit_CircuitPython_ADS1x15
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
