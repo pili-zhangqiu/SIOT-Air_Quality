@@ -8,7 +8,7 @@ import bme280
 import datetime
 
 # My Spreadsheet ID ... See google documentation on how to derive this
-MY_SPREADSHEET_ID = '1tIpNwBEdbLACms2RFY-pO0...'
+MY_SPREADSHEET_ID = '1x-PEGT76a5Roh4-HkeA8lpDTRqaZw-RSTeOhviL27ys'
 
 
 def update_sheet(sheetname, temperature, pressure, humidity):  
