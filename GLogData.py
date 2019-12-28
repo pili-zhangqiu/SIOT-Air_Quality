@@ -2,8 +2,8 @@
 from __future__ import print_function  
 from googleapiclient.discovery import build  
 from httplib2 import Http  
-from oauthclient import file, client, tools  
-from oauthclient.service_account import ServiceAccountCredentials  
+from oauth2client import file, client, tools  
+from oauth2client.service_account import ServiceAccountCredentials  
 import datetime
 
 # Import the function reading the ADC values from both the exterior and interior MQ135 sensors
