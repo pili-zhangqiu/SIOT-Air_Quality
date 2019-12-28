@@ -63,6 +63,7 @@ while True:
 ##                               Web App                                   ##
 #############################################################################
 
+'''
 # Retrieve data from database
 
 def getData():
@@ -72,12 +73,10 @@ def getData():
         for row in curs.execute("SELECT * FROM DHT_DATA2 ORDER BY timestamp DESC LIMIT 1"):
 
                 time = str(row[0])
-
                 temp = row[1]
-
                 hum = row[2]
-
                 pulse = row[3]
+                
         conn.close()
 
         return time, temp, hum, pulse
@@ -98,12 +97,14 @@ def getHistData (numSamples):
                 hums.append(row[2])
                 pulse.append(row[3])
         return dates, temps, hums, pulse
+    
 def maxRowsTable():
         conn=sqlite3.connect('data/DHT.db')
         curs=conn.cursor()
         for row in curs.execute("select COUNT(temp) from  DHT_data2"):
                 maxNumberRows=row[0]
         return maxNumberRows
+    
 # define and initialize global variables
 global numSamples
 numSamples = maxRowsTable()
@@ -217,3 +218,4 @@ def plot_pulse():
 if __name__ == "__main__":
 
    app.run(host='0.0.0.0', port=80, debug=False)
+   '''
