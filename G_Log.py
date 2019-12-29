@@ -31,9 +31,13 @@ def main():
 
 
         # Print values on the command prompt
-        print ('Air Quality: (Inside) %f PPM' % ADC0)
-        print ('Air Quality: (Outside) %f PPM' % ADC1)
-        print('Temp={0:0.1f}*C  Humidity={1:0.1f}%'.format(temperature, humidity))       
+        print('Values Inside')
+        print ('Air Quality: %f PPM' % ADC0)
+        print('Temp={0:0.1f}*C  Humidity={1:0.1f}%'.format(DHT_t0, DHT_h0))  
+        print(' ')
+        print('Values Outside')
+        print ('Air Quality: %f PPM' % ADC1)
+        print('Temp={0:0.1f}*C  Humidity={1:0.1f}%'.format(DHT_t1, DHT_h1))     
         print ('-' *30)
 
         update_sheet("Sheet1", ADC0, DHT_t0, DHT_h0, ADC1, DHT_t1, DHT_h1)
