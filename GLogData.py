@@ -6,6 +6,12 @@ from oauth2client import file, client, tools
 from oauth2client.service_account import ServiceAccountCredentials  
 import datetime
 
+import pickle
+import os.path
+from googleapiclient.discovery import build
+from google_auth_oauthlib.flow import InstalledAppFlow
+from google.auth.transport.requests import Request
+
 # Import the function reading the ADC values from both the exterior and interior MQ135 sensors
 from ADS1x15_read import ADCread
 
