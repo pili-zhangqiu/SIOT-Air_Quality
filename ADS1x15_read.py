@@ -33,9 +33,6 @@ def ADCread():
 
         # Note you can also pass in an optional data_rate parameter that controls the ADC conversion time (in samples/second).
         # ADC_values[i] = adc.read_adc(i, gain=GAIN, data_rate=128)
-        
-    ADC0 = ADC_values[0]
-    ADC1 = ADC_values[1]
       
-    return ADC0, ADC1;
+    return ADC_values;
     
