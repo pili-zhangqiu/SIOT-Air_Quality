@@ -70,7 +70,11 @@ def main():
     '''
     '''
 
-    ADC0, ADC1, ADC2, ADC3 = ADCread()
+    ADC_values = ADCread()
+    print ('ADC: %f ' % ADC_values)
+    ADC0 = ADC_values(0)
+    ADC1 = ADC_values(1)
+
     print ('Air Quality: (Inside) %f PPM' % ADC0)
     print ('Air Quality: (Outside) %f PPM' % ADC1)
     print ('-' *30)
