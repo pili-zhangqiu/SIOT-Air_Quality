@@ -71,7 +71,7 @@ def main():
     '''
 
     ADC_values = ADCread()
-    print ('ADC: %f ' % ADC_values)
+    print (ADC_values)
     ADC0 = ADC_values(0)
     ADC1 = ADC_values(1)
 
