@@ -47,12 +47,6 @@ def update_sheet(sheetname, AirQy0, AirQy1):
 
     service = build('sheets', 'v4', credentials=creds)
     
-    '''
-    creds = ServiceAccountCredentials.from_json_keyfile_name( 
-            'credentials.json', SCOPES)
-    service = build('sheets', 'v4', http=creds.authorize(Http()))
-    '''
-
     # Call the Sheets API, append the next row of sensor data
     # values is the array of rows we are updating, its a single row
     values = [ [ str(datetime.datetime.now()), 
@@ -62,8 +56,8 @@ def update_sheet(sheetname, AirQy0, AirQy1):
     # call the append API to perform the operation
     result = service.spreadsheets().values().append(
                 spreadsheetId=MY_SPREADSHEET_ID, 
-                range=sheetname + '!A1:G1',
-                valueInputOption=value_input_option, body=body).execute()                     
+                range=sheetname + '!A1:C1',
+                valueInputOption='USER_ENTERED', body=body).execute()                     
 
 
 def main():  
