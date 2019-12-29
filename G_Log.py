@@ -10,7 +10,7 @@ from G_UpdateSheet import update_sheet
 from ADS1x15_read import ADCread
 
 # Import the library reading the DHT22 values (Temperature and Humidity)
-import DHT22_read import DHTread
+from DHT22_read import DHTread
 
 def main():  
   
