@@ -74,6 +74,7 @@ def main():
         print ('-' *30)
 
         update_sheet("Sheet1", ADC0, ADC1)
+        time.sleep(60)
 
 if __name__ == '__main__':  
     main()
