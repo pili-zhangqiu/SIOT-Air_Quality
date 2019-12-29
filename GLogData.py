@@ -72,14 +72,15 @@ def main():
 
     ADC_values = ADCread()
     print (ADC_values)
-    ADC0 = ADC_values(0)
-    ADC1 = ADC_values(1)
+    
+    ADC0 = ADC_values[0]    # Air Quality Inside
+    ADC1 = ADC_values[1]    # Air Quality Outside
 
     print ('Air Quality: (Inside) %f PPM' % ADC0)
     print ('Air Quality: (Outside) %f PPM' % ADC1)
     print ('-' *30)
     
-    update_sheet("Sheet1", AirQy_In, AirQy_Out)
+    update_sheet("Sheet1", ADC0, ADC1)
 
 if __name__ == '__main__':  
     main()
