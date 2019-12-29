@@ -14,19 +14,38 @@ SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 
 # My Spreadsheet ID ... See google documentation on how to derive this
 MY_SPREADSHEET_ID = '1x-PEGT76a5Roh4-HkeA8lpDTRqaZw-RSTeOhviL27ys'
-temper = 1;
-
 
 def update_sheet(sheetname, AirQy0, AirQy1):  
     """update_sheet method:
        appends a row of a sheet in the spreadsheet with the 
        the latest temperature, pressure and humidity sensor data
     """
-
     # authentication, authorization step
+    creds = None
+
+    if os.path.exists('token.pickle'):
+        with open('token.pickle', 'rb') as token:
+            creds = pickle.load(token)
+            
+    # If there are no (valid) credentials available, let the user log in.
+    if not creds or not creds.valid:
+        if creds and creds.expired and creds.refresh_token:
+            creds.refresh(Request())
+        else:
+            flow = InstalledAppFlow.from_client_secrets_file(
+                'credentials.json', SCOPES)
+            creds = flow.run_local_server(port=0)
+        # Save the credentials for the next run
+        with open('token.pickle', 'wb') as token:
+            pickle.dump(creds, token)
+
+    service = build('sheets', 'v4', credentials=creds)
+    
+    '''
     creds = ServiceAccountCredentials.from_json_keyfile_name( 
             'credentials.json', SCOPES)
     service = build('sheets', 'v4', http=creds.authorize(Http()))
+    '''
 
     # Call the Sheets API, append the next row of sensor data
     # values is the array of rows we are updating, its a single row
@@ -46,20 +65,14 @@ def main():
        reads the BME280 chip to read the three sensors, then
        call update_sheets method to add that sensor data to the spreadsheet
     """
+  
     
-    """    
-    bme = bme280.Bme280()
-    bme.set_mode(bme280.MODE_FORCED)
-    tempC, pressure, humidity = bme.get_data()
-    pressure = pressure/100.
-    print ('Temperature: %f °C' % tempC)
-    print ('Pressure: %f hPa' % pressure)
-    print ('Humidity: %f %%rH' % humidity)
-    update_sheet("Haifa_outside", tempC, pressure, humidity)
-    """
-    AirQy_In, AirQy_Out = ADCread()
-    print ('Air Quality: (Inside) %f PPM' % AirQy_In)
-    print ('Air Quality: (Outside) %f PPM' % AirQy_Out)
+    '''
+    '''
+
+    ADC0, ADC1, ADC2, ADC3 = ADCread()
+    print ('Air Quality: (Inside) %f PPM' % ADC0)
+    print ('Air Quality: (Outside) %f PPM' % ADC1)
     print ('-' *30)
     
     update_sheet("Sheet1", AirQy_In, AirQy_Out)
