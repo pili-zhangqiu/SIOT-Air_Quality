@@ -4,7 +4,8 @@ oauth2client (solved https://oauth2client.readthedocs.io/en/latest/)
 
 ADS1x15 (https://learn.adafruit.com/raspberry-pi-analog-to-digital-converters/ads1015-slash-ads1115)
 
-GoogleAPI
+GoogleAP
+-Spreadsheet Tutorial: http://www.whatimade.today/log-sensor-data-straight-to-google-sheets-from-a-raspberry-pi-zero-all-the-python-code/?fbclid=IwAR1KB3eKgikrl87bONCU7gI7-nIvOin2d264GQd-ZP2u1ZJhFzjey_ScrU4
 
 Python versions (https://linuxconfig.org/change-default-python-version-on-raspbian-gnu-linux)
 
