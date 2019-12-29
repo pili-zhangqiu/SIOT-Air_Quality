@@ -2,7 +2,7 @@
 
 oauth2client (solved https://stackoverflow.com/questions/44011776/how-to-prevent-importerror-no-module-named-oauth2client-client-on-google-app)
 
-ADS1x15
+ADS1x15 (https://learn.adafruit.com/raspberry-pi-analog-to-digital-converters/ads1015-slash-ads1115)
 
 GoogleAPI
 
