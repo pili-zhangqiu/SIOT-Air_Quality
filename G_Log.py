@@ -40,7 +40,7 @@ def main():
         print('Temp={0:0.1f}*C  Humidity={1:0.1f}%'.format(DHT_t1, DHT_h1))     
         print ('-' *30)
 
-        update_sheet("Sheet1", ADC0, DHT_t0, DHT_h0, ADC1, DHT_t1, DHT_h1)
+        update_sheet("Sheet1", ADC0, ADC1, DHT_t0, DHT_h0, DHT_t1, DHT_h1)
         time.sleep(60)
 
 if __name__ == '__main__':  
