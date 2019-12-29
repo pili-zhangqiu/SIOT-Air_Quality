@@ -50,7 +50,7 @@ def update_sheet(sheetname, AirQy0, AirQy1):
     # Call the Sheets API, append the next row of sensor data
     # values is the array of rows we are updating, its a single row
     values = [ [ str(datetime.datetime.now()), 
-        'AirQy_Inside', AirQy0 , 'AirQy_Outside', AirQy1 ] ]
+        AirQy0 , AirQy1 ] ]
     body = { 'values': values }
     
     # call the append API to perform the operation
@@ -61,26 +61,19 @@ def update_sheet(sheetname, AirQy0, AirQy1):
 
 
 def main():  
-    """main method:
-       reads the BME280 chip to read the three sensors, then
-       call update_sheets method to add that sensor data to the spreadsheet
-    """
   
-    
-    '''
-    '''
+    while True:
+        ADC_values = ADCread()
+        print (ADC_values)
 
-    ADC_values = ADCread()
-    print (ADC_values)
-    
-    ADC0 = ADC_values[0]    # Air Quality Inside
-    ADC1 = ADC_values[1]    # Air Quality Outside
+        ADC0 = ADC_values[0]    # Air Quality Inside
+        ADC1 = ADC_values[1]    # Air Quality Outside
 
-    print ('Air Quality: (Inside) %f PPM' % ADC0)
-    print ('Air Quality: (Outside) %f PPM' % ADC1)
-    print ('-' *30)
-    
-    update_sheet("Sheet1", ADC0, ADC1)
+        print ('Air Quality: (Inside) %f PPM' % ADC0)
+        print ('Air Quality: (Outside) %f PPM' % ADC1)
+        print ('-' *30)
+
+        update_sheet("Sheet1", ADC0, ADC1)
 
 if __name__ == '__main__':  
     main()
