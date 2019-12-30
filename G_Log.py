@@ -26,8 +26,8 @@ def main():
         DHT_pin0 = 23
         DHT_pin1 = 24
 
-        DHT_t0, DHT_h0 = DHTread(DHT_pin0)
-        DHT_t1, DHT_h1 = DHTread(DHT_pin1)
+        DHT_h0, DHT_t0  = DHTread(DHT_pin0)
+        DHT_h1, DHT_t1 = DHTread(DHT_pin1)
 
 
         # Print values on the command prompt
