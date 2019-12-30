@@ -11,4 +11,7 @@ Python versions (https://linuxconfig.org/change-default-python-version-on-raspbi
 
 CO2 levels guide: https://www.engineeringtoolbox.com/co2-comfort-level-d_1024.html
 
+Vout = analogRead();
+Rs = RL * (6204.5 - Vout) / Vout;
+
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
