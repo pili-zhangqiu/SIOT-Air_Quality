@@ -25,7 +25,7 @@ def update_sheet(sheetname, AirQy0, AirQy1, temp0, hum0, temp1, hum1):
     secret_file = os.path.join(os.getcwd(), 'client_secret.json')
     creds = ServiceAccountCredentials.from_json_keyfile_name(secret_file, scopes=SCOPES)
     
-    gc = gspread.authorize(credentials)
+    gc = gspread.authorize(creds)
 
     # My Spreadsheet ID ... See google documentation on how to derive this
     MY_SPREADSHEET_ID = '1x-PEGT76a5Roh4-HkeA8lpDTRqaZw-RSTeOhviL27ys'
