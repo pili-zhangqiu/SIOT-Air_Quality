@@ -22,6 +22,11 @@ def main():
         ADC0 = ADC_values[0]    # Air Quality Inside
         ADC1 = ADC_values[1]    # Air Quality Outside
         
+        # Calculate PPM
+        RL = 10
+        PPM0 = RL * (6204.5 - ADC0) / ADC0;
+        PPM1 = RL * (6204.5 - ADC1) / ADC1;     
+        
         # Read temperature and humidity values from the DHT22 sensors
         DHT_pin0 = 23
         DHT_pin1 = 24
@@ -31,6 +36,9 @@ def main():
 
 
         # Print values on the command prompt
+        print('Air Quality in PPM')
+        print('Inside={0:0.1f}*C  Outside={1:0.1f}%'.format(PPM0, PPM1)) 
+
         print('Values Inside')
         print ('Air Quality: %f PPM' % ADC0)
         print('Temp={0:0.1f}*C  Humidity={1:0.1f}%'.format(DHT_t0, DHT_h0))  
