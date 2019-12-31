@@ -20,6 +20,8 @@ def update_sheet(sheetname, AirQy0, AirQy1, temp0, hum0, temp1, hum1):
     
     # If modifying these scopes, delete the file token.pickle.
     SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
+    secret_file = os.path.join(os.getcwd(), 'client_secret.json')
+    creds = service_account.Credentials.from_service_account_file(secret_file, scopes=SCOPES)
 
     # My Spreadsheet ID ... See google documentation on how to derive this
     MY_SPREADSHEET_ID = '1x-PEGT76a5Roh4-HkeA8lpDTRqaZw-RSTeOhviL27ys'
@@ -44,9 +46,6 @@ def update_sheet(sheetname, AirQy0, AirQy1, temp0, hum0, temp1, hum1):
         with open('token.pickle', 'wb') as token:
             pickle.dump(creds, token)
     '''
-    # Delete following 2 lines if not useful
-    creds = ServiceAccountCredentials.from_json_keyfile_name( 
-           'SIOT_Creds.json', SCOPES)
 
     service = build('sheets', 'v4', credentials=creds)
     
