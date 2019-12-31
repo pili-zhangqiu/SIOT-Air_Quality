@@ -9,6 +9,8 @@ GoogleAP
 
 Python versions (https://linuxconfig.org/change-default-python-version-on-raspbian-gnu-linux)
 
+PPM Calculations: https://community.particle.io/t/mq135-co2-ppm-calculation/24061
+
 CO2 levels guide: https://www.engineeringtoolbox.com/co2-comfort-level-d_1024.html
 
 Vout = analogRead();
