@@ -25,7 +25,7 @@ def update_sheet(sheetname, AirQy0, AirQy1, temp0, hum0, temp1, hum1):
     secret_file = os.path.join(os.getcwd(), 'client_secret.json')
     creds = ServiceAccountCredentials.from_json_keyfile_name(secret_file, scopes=SCOPES)
     
-    gc = gspread.authorize(creds)
+    #gc = gspread.authorize(creds)
 
     # My Spreadsheet ID ... See google documentation on how to derive this
     MY_SPREADSHEET_ID = '1x-PEGT76a5Roh4-HkeA8lpDTRqaZw-RSTeOhviL27ys'
@@ -50,8 +50,9 @@ def update_sheet(sheetname, AirQy0, AirQy1, temp0, hum0, temp1, hum1):
         with open('token.pickle', 'wb') as token:
             pickle.dump(creds, token)
     '''
-
-    service = build('sheets', 'v4', credentials=creds)
+    
+    service = build('sheets', 'v4', http=creds.authorize(Http()))
+    # service = build('sheets', 'v4', credentials=creds)
     
     # Call the Sheets API, append the next row of sensor data
     # values is the array of rows we are updating, its a single row
