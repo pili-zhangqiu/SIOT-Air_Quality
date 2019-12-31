@@ -12,18 +12,19 @@ from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 
-
-# If modifying these scopes, delete the file token.pickle.
-SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
-
-# My Spreadsheet ID ... See google documentation on how to derive this
-MY_SPREADSHEET_ID = '1x-PEGT76a5Roh4-HkeA8lpDTRqaZw-RSTeOhviL27ys'
-
 def update_sheet(sheetname, AirQy0, AirQy1, temp0, hum0, temp1, hum1):  
     """update_sheet method:
        appends a row of a sheet in the spreadsheet with the 
        the latest temperature, pressure and humidity sensor data
     """
+    
+    # If modifying these scopes, delete the file token.pickle.
+    SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
+
+    # My Spreadsheet ID ... See google documentation on how to derive this
+    MY_SPREADSHEET_ID = '1x-PEGT76a5Roh4-HkeA8lpDTRqaZw-RSTeOhviL27ys'
+
+    '''
     # authentication, authorization step
     creds = None
 
@@ -42,6 +43,10 @@ def update_sheet(sheetname, AirQy0, AirQy1, temp0, hum0, temp1, hum1):
         # Save the credentials for the next run
         with open('token.pickle', 'wb') as token:
             pickle.dump(creds, token)
+    '''
+    # Delete following 2 lines if not useful
+    creds = ServiceAccountCredentials.from_json_keyfile_name( 
+           'SIOT_Creds.json', SCOPES)
 
     service = build('sheets', 'v4', credentials=creds)
     
