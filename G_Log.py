@@ -24,8 +24,20 @@ def main():
         
         # Calculate PPM
         RL = 10
-        PPM0 = (RL * (6204.5 - ADC0)) / ADC0;
-        PPM1 = (RL * (6204.5 - ADC1)) / ADC1;     
+        #PPM0 = (RL * (6204.5 - ADC0)) / ADC0;
+        #PPM1 = (RL * (6204.5 - ADC1)) / ADC1;   
+        
+        R0 = 76.63
+        Rs = ((5.0 * RL) - (RL*ADC0))/ ADC0
+        ratio=Rs/R0
+        ratio=ratio*0.3611
+        PPM0= (146.15*(2.868-ratio)+10)
+        
+        R0 = 76.63
+        Rs = ((5.0 * RL) - (RL*ADC1))/ ADC1
+        ratio=Rs/R0
+        ratio=ratio*0.3611
+        PPM1= (146.15*(2.868-ratio)+10)
         
         # Read temperature and humidity values from the DHT22 sensors
         DHT_pin0 = 23
