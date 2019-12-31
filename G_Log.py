@@ -12,6 +12,20 @@ from ADS1x15_read import ADCread
 # Import the library reading the DHT22 values (Temperature and Humidity)
 from DHT22_read import DHTread
 
+#Others
+from __future__ import print_function  
+from googleapiclient.discovery import build  
+from httplib2 import Http  
+from oauth2client import file, client, tools  
+from oauth2client.service_account import ServiceAccountCredentials  
+import datetime
+
+import pickle
+import os.path
+from googleapiclient.discovery import build
+from google_auth_oauthlib.flow import InstalledAppFlow
+from google.auth.transport.requests import Request
+
 def main():  
   
     #while True:
