@@ -49,11 +49,11 @@ def main():
 
         # Print values on the command prompt
         print('Values Inside')
-        print('Air Quality: Concentration of CO is{1:0.1f}% PPM'.format(PPM0))  
+        print('Air Quality: Concentration of CO is %f PPM' % PPM0)  
         print('Temp={0:0.1f}*C  Humidity={1:0.1f}%'.format(DHT_t0, DHT_h0))  
         print(' ')
         print('Values Outside')
-        print('Air Quality: Concentration of CO is{1:0.1f}% PPM'.format(PPM1))  
+        print('Air Quality: Concentration of CO is %f PPM' % PPM1)  
         print('Temp={0:0.1f}*C  Humidity={1:0.1f}%'.format(DHT_t1, DHT_h1)) 
         print ('-' *30)
 
