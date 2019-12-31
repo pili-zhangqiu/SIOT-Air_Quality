@@ -3,14 +3,10 @@ from __future__ import print_function
 from googleapiclient.discovery import build  
 # from httplib2 import Http  
 # from oauth2client import file, client, tools  
-# from oauth2client.service_account import ServiceAccountCredentials  
+from oauth2client.service_account import ServiceAccountCredentials  
 import datetime
 
-import httplib2
-import os
-
-from apiclient import discovery
-from google.ouath2 import service_account
+import gspread
 
 import pickle
 import os.path
@@ -27,7 +23,9 @@ def update_sheet(sheetname, AirQy0, AirQy1, temp0, hum0, temp1, hum1):
     # If modifying these scopes, delete the file token.pickle.
     SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
     secret_file = os.path.join(os.getcwd(), 'client_secret.json')
-    creds = service_account.Credentials.from_service_account_file(secret_file, scopes=SCOPES)
+    creds = ServiceAccountCredentials.from_json_keyfile_name(secret_file, scopes=SCOPES)
+    
+    gc = gspread.authorize(credentials)
 
     # My Spreadsheet ID ... See google documentation on how to derive this
     MY_SPREADSHEET_ID = '1x-PEGT76a5Roh4-HkeA8lpDTRqaZw-RSTeOhviL27ys'
