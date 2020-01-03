@@ -152,7 +152,7 @@ def MQ135_Values(ADC_val,t,h):
 	print("\t Resistance: %s" % round(resistance))
 	print("\t PPM: %s" % round(ppm))
 	print("\t Corrected PPM: %s ppm" % round(correctedPPM))
-
+	return (rzero,correctedRZero,ppm,correctedPPM)
 '''
 if __name__ == "__main__":
 	main()
