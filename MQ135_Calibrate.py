@@ -19,10 +19,10 @@ import math
 import operator
 
 # Import the function reading the ADC values from both MQ135 sensors (Air Quality)
-from ADS1x15_read import ADCread
+# from ADS1x15_read import ADCread
 
 # Import the library reading the DHT22 values (Temperature and Humidity)
-from DHT22_read import DHTread
+# from DHT22_read import DHTread
 
 # t = 22 # assume current temperature. Recommended to measure with DHT22
 # h = 65 # assume current humidity. Recommended to measure with DHT22
