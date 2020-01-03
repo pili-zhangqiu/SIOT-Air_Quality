@@ -18,8 +18,14 @@ import sys
 import math
 import operator
 
-t = 22 # assume current temperature. Recommended to measure with DHT22
-h = 65 # assume current humidity. Recommended to measure with DHT22
+# Import the function reading the ADC values from both MQ135 sensors (Air Quality)
+from ADS1x15_read import ADCread
+
+# Import the library reading the DHT22 values (Temperature and Humidity)
+from DHT22_read import DHTread
+
+# t = 22 # assume current temperature. Recommended to measure with DHT22
+# h = 65 # assume current humidity. Recommended to measure with DHT22
 
 """
 First version of an RaspBerryPi Library for the MQ135 gas sensor
@@ -132,9 +138,9 @@ More Info: https://www.arduino.cc/reference/en/language/functions/math/map/
 def map(x,in_min,in_max,out_min,out_max):
 	return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min
 
-def main():
-	value_ads = 3300 # value obtained by ADS1115
-	value_pin = map((value_ads - 565), 0, 26690, 0, 1023) # 565 / 535 fix value
+def MQ135_Values(ADC_val,t,h):
+	value_pin = map((ADC_val - 565), 0, 26690, 0, 1023) # 565 / 535 fix value
+	
 	rzero = getRZero(value_pin,RLOAD,ATMOCO2,PARA,PARB)
 	correctedRZero = getCorrectedRZero(t,h,CORA,CORB,CORC,CORD,CORE,CORF,CORG,value_pin,RLOAD,ATMOCO2,PARA,PARB)
 	resistance = getResistance(value_pin,RLOAD)	
@@ -147,5 +153,7 @@ def main():
 	print("\t PPM: %s" % round(ppm))
 	print("\t Corrected PPM: %s ppm" % round(correctedPPM))
 
+'''
 if __name__ == "__main__":
 	main()
+'''
