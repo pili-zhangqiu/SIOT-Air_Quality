@@ -38,15 +38,15 @@ def main():
 
         # Print values on the command prompt
         print('Values Inside')
-        print('Air Quality: Concentration of CO is %f PPM' % PPM0)  
+        print('Air Quality: Concentration of CO is %f PPM' % c_PPM0)  
         print('Temp={0:0.1f}*C  Humidity={1:0.1f}%'.format(DHT_t0, DHT_h0))  
         print(' ')
         print('Values Outside')
-        print('Air Quality: Concentration of CO is %f PPM' % PPM1)  
+        print('Air Quality: Concentration of CO is %f PPM' % c_PPM1)  
         print('Temp={0:0.1f}*C  Humidity={1:0.1f}%'.format(DHT_t1, DHT_h1)) 
         print ('-' *30)
 
-        update_sheet("Sheet1", ADC0, PPM0, ADC1, PPM1, DHT_t0, DHT_h0, DHT_t1, DHT_h1)
+        update_sheet("Sheet1", ADC0, c_PPM0, ADC1, c_PPM1, DHT_t0, DHT_h0, DHT_t1, DHT_h1)
        # time.sleep(60)
 
 if __name__ == '__main__':  
