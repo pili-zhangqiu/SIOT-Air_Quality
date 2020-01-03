@@ -12,6 +12,9 @@ from ADS1x15_read import ADCread
 # Import the library reading the DHT22 values (Temperature and Humidity)
 from DHT22_read import DHTread
 
+# Import the library calculating PPM values for the MQ135
+from MQ135_Calibrate import MQ135_Values
+
 def main():  
   
     #while True:
@@ -22,30 +25,16 @@ def main():
         ADC0 = ADC_values[0]    # Air Quality Inside
         ADC1 = ADC_values[1] -2550    # Air Quality Outside
         
-        # Calculate PPM
-        RL = 10
-        #PPM0 = (RL * (6204.5 - ADC0)) / ADC0;
-        #PPM1 = (RL * (6204.5 - ADC1)) / ADC1;   
-        
-        R0 = 76.63
-        Rs = ((5.0 * RL) - (RL*ADC0))/ ADC0
-        ratio=Rs/R0
-        ratio=ratio*0.3611
-        PPM0= (146.15*(2.868-ratio)+10)
-        
-        R0 = 76.63
-        Rs = ((5.0 * RL) - (RL*ADC1))/ ADC1
-        ratio=Rs/R0
-        ratio=ratio*0.3611
-        PPM1= (146.15*(2.868-ratio)+10)
-        
         # Read temperature and humidity values from the DHT22 sensors
         DHT_pin0 = 23
         DHT_pin1 = 24
 
         DHT_h0, DHT_t0 = DHTread(DHT_pin0)
         DHT_h1, DHT_t1 = DHTread(DHT_pin1)
-
+        
+        # Calculate PPM ---------------------------------------------
+        RZ0, c_RZ0, PPM0, c_PPM0 = MQ135_Values(ADC0,DHT_t0,hDHT_h0)
+        RZ1, c_RZ1, PPM1, c_PPM1 = MQ135_Values(ADC1,DHT_t1,hDHT_h1)
 
         # Print values on the command prompt
         print('Values Inside')
