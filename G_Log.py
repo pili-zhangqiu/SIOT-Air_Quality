@@ -33,8 +33,8 @@ def main():
         DHT_h1, DHT_t1 = DHTread(DHT_pin1)
         
         # Calculate PPM ---------------------------------------------
-        RZ0, c_RZ0, PPM0, c_PPM0 = MQ135_Values(ADC0,DHT_t0,hDHT_h0)
-        RZ1, c_RZ1, PPM1, c_PPM1 = MQ135_Values(ADC1,DHT_t1,hDHT_h1)
+        RZ0, c_RZ0, PPM0, c_PPM0 = MQ135_Values(ADC0,DHT_t0,DHT_h0)
+        RZ1, c_RZ1, PPM1, c_PPM1 = MQ135_Values(ADC1,DHT_t1,DHT_h1)
 
         # Print values on the command prompt
         print('Values Inside')
