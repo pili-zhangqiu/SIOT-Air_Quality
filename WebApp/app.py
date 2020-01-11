@@ -16,4 +16,6 @@ def chart():
 
 if __name__ == '__main__':
     # Run code server and app:
-    app.run(debug=True, host='0.0.0.0')
+    app.run(debug=True)
+    # app.run(debug=True, host='0.0.0.0')
+
