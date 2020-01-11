@@ -70,7 +70,7 @@
   
   
   
-<body onload="displayMyVar('target');">
+<body>
     <div class="topnav" id="myTopnav">
       <a href="home.html">Home</a>
       <a href="data_report.html" class="active">Analysis of A Week's Data</a>
@@ -81,7 +81,7 @@
     </div>
 
     <h1>"The array of AQ in PPM is: " + AQPPM_Out</h1>
-          <span id="target"></span>
+    <p id="demo"></p>
 
     <canvas id=”7DChart” width=”600"></canvas>
 
@@ -118,7 +118,9 @@
           AQPPM_In.push(entry[i+6].content.$t);
           Temp_In.push(entry[i+7].content.$t);
           Hum_In.push(entry[i+8].content.$t);
+                                  person= 'hi'
         }
+        
 
         console.log(timestamp);
         console.log(AQPPM_Out);
@@ -130,9 +132,8 @@
       })
       });
                                   
-                                  function displayMyVar(targetElementId) {
-                document.getElementById(targetElementId).innerHTML = myVar;
-            }
+    document.getElementById("demo").innerHTML =
+        timestamp + "<br>" + person + "<br>";
     </script>
 
     <script>
