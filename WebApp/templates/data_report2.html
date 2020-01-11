@@ -65,8 +65,35 @@
         text-align: left;
       }
     }
-  </style>
+  </style> 
+</head>
   
+  
+  
+<body>
+  <div class="topnav" id="myTopnav">
+    <a href="home.html">Home</a>
+    <a href="data_report.html" class="active">Analysis of A Week's Data</a>
+    <a href="live_data.html">Live Data Feed</a>
+    <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+      <i class="fa fa-bars"></i>
+    </a>
+  </div>
+  
+  <h1>"The array of AQ in PPM is: " + AQPPM_Out</h1>
+  <canvas id=”7DChart” width=”600"></canvas>
+
+  <script>
+    function myFunction() {
+      var x = document.getElementById("myTopnav");
+      if (x.className === "topnav") {
+        x.className += " responsive";
+      } else {
+        x.className = "topnav";
+      }
+    }
+  </script>
+                              
     <script>
     $(function(){
     var sheetUrl = 'https://spreadsheets.google.com/feeds/cells/10zDDvXppl4g0pgKxvKoFc9DZtFC5knse__5Lb78Xs1s/2/public/full?alt=json';
@@ -153,31 +180,5 @@
             }
         });
   </script>
-  
-</head>
-<body>
-  <div class="topnav" id="myTopnav">
-    <a href="home.html">Home</a>
-    <a href="data_report.html" class="active">Analysis of A Week's Data</a>
-    <a href="live_data.html">Live Data Feed</a>
-    <a href="javascript:void(0);" class="icon" onclick="myFunction()">
-      <i class="fa fa-bars"></i>
-    </a>
-  </div>
-  
-  <h1>"The array of AQ in PPM is: " + AQPPM_Out</h1>
-  <canvas id=”7DChart” width=”600"></canvas>
-
-  <script>
-    function myFunction() {
-      var x = document.getElementById("myTopnav");
-      if (x.className === "topnav") {
-        x.className += " responsive";
-      } else {
-        x.className = "topnav";
-      }
-    }
-  </script>
- 
 </body>
 </html>
