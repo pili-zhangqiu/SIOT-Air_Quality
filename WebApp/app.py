@@ -5,7 +5,7 @@ app = Flask(__name__)
 # Define the main route:
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('data_report2.html')
 
 @app.route("/data_report")
 def chart():
