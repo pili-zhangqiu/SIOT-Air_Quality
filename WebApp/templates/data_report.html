@@ -3,6 +3,12 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  
+  <meta charset="utf-8" />
+  <title>Chart.js Example</title>
+  <!-- import plugin script -->
+  <script src='static/Chart.min.js'></script>
+  
   <style>
     body {
       margin: 0;
@@ -62,31 +68,92 @@
   </style>
 </head>
 <body>
-
-<div class="topnav" id="myTopnav">
-  <a href="home.html">Home</a>
-  <a href="data_report.html" class="active">Analysis of A Week's Data</a>
-  <a href="live_data.html">Live Data Feed</a>
-  <a href="javascript:void(0);" class="icon" onclick="myFunction()">
-    <i class="fa fa-bars"></i>
-  </a>
-</div>
-
-<div style="padding-left:16px">
-  <h2>Responsive Topnav Example</h2>
-  <p>Resize the browser window to see how it works.</p>
-</div>
-
-<script>
-  function myFunction() {
-    var x = document.getElementById("myTopnav");
-    if (x.className === "topnav") {
-      x.className += " responsive";
-    } else {
-      x.className = "topnav";
-    }
-  }
-</script>
+  <div class="topnav" id="myTopnav">
+    <a href="home.html">Home</a>
+    <a href="data_report.html" class="active">Analysis of A Week's Data</a>
+    <a href="live_data.html">Live Data Feed</a>
+    <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+      <i class="fa fa-bars"></i>
+    </a>
+  </div>
   
+  <div style="padding-left:16px">
+    <h2>Simple Line Chart</h2>
+    <!-- bar chart canvas element -->
+    <canvas id="myChart" width="600" height="400"></canvas>
+    <p id="caption">The chart is displaying a simple line chart.</p>
+  </div>
+
+  <script>
+    function myFunction() {
+      var x = document.getElementById("myTopnav");
+      if (x.className === "topnav") {
+        x.className += " responsive";
+      } else {
+        x.className = "topnav";
+      }
+    }
+  </script>
+  
+  <script>
+    // Global parameters:
+    // do not resize the chart canvas when its container does (keep at 600x400px)
+    Chart.defaults.global.responsive = false;
+
+    // define the chart data
+    var chartData = {
+      labels : [{% for item in labels %}
+                 "{{item}}",
+                {% endfor %}],
+      datasets : [{
+          label: '{{ legend }}',
+          fill: true,
+          lineTension: 0.1,
+          backgroundColor: "rgba(75,192,192,0.4)",
+          borderColor: "rgba(75,192,192,1)",
+          borderCapStyle: 'butt',
+          borderDash: [],
+          borderDashOffset: 0.0,
+          borderJoinStyle: 'miter',
+          pointBorderColor: "rgba(75,192,192,1)",
+          pointBackgroundColor: "#fff",
+          pointBorderWidth: 1,
+          pointHoverRadius: 5,
+          pointHoverBackgroundColor: "rgba(75,192,192,1)",
+          pointHoverBorderColor: "rgba(220,220,220,1)",
+          pointHoverBorderWidth: 2,
+          pointRadius: 1,
+          pointHitRadius: 10,
+          data : [{% for item in values %}
+                    {{item}},
+                  {% endfor %}],
+          spanGaps: false
+      }]
+    }
+
+    // get chart canvas
+    var ctx = document.getElementById("myChart").getContext("2d");
+
+    // create the chart using the chart canvas
+    var myChart = new Chart(ctx, {
+      type: 'line',
+      data: chartData,
+    });
+  </script>
+  
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.0.min.js">
+    var spreadsheetId = "10zDDvXppl4g0pgKxvKoFc9DZtFC5knse__5Lb78Xs1s",
+    url = "https://spreadsheets.google.com/feeds/list/" +
+          spreadsheetId +
+          "/od6/public/basic?alt=json";
+    
+    $.get({
+      url: url,
+      success: function(response) {
+        console.log(response);
+      }
+    });
+  </script>
+
 </body>
 </html>
