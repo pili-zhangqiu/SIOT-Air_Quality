@@ -1,0 +1,2931 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <meta charset="utf-8" />
+    <title>Chart.js Example</title>
+    <!-- import plugin script -->
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    
+    <!-- Custom Intro -->
+    <style>
+        #top {
+          text-align: center;
+        }
+        a {
+          color: rgba(63, 206, 134, .9);
+        }
+        small {
+          color: white;
+        }
+        .logo {
+          font: 84px 'Arial Narrow', sans-serif;/* I picked this font because it's the closest looking 'web safe' font http://cssfontstack.com/ */
+          color: #282828;
+          text-transform: uppercase;
+          letter-spacing: -4px;
+        }
+        
+        /* stuff for both words */
+        .logo span {
+          position: relative;
+        }
+        .logo span:before,
+        .logo span:after {
+          content: '';
+          position: absolute;
+          border-width: 32px;/* makes a nice, big 64px square */
+          border-style: solid;
+          border-color: transparent;
+          height: 0;
+          z-index: 10;
+        }
+        
+        /* stuff for 1st word */
+        .logo .word1 {
+          color: rgba(63, 206, 134, .9);
+          margin-right: -38px;
+          transform: rotateY(180deg);/* using Prefix free */
+          display: inline-block;/* required for transform */
+          z-index: 10;/* stack 1st word on top */
+        }
+        .logo .word1:before {
+          right: -4px;/* would be left, but we flipped the word */
+          top: -9px;
+          border-top-color: white;/* match background color */
+          border-right-color: white;/* would be left, but we flipped the word */
+        }
+        .logo .word1:after {
+          left: 17px;/* would be right, but we flipped the word */
+          bottom: -15px;
+          border-bottom-color: white;
+          border-left-color: white;/* would be right, but we flipped the word */
+        }
+        
+        /* stuff for 2nd word */
+        .logo .word2 {
+          z-index: 0;/* stack 2nd word below */
+        }
+        .logo .word2:before {
+          left: -4px;
+          top: -6px;
+          border-top-color: white;
+          border-left-color: white;
+        }
+        .logo .word2:after {
+          right: -4px;  
+          bottom: 4px;
+          border-bottom-color: white;
+          border-right-color: white;
+        }
+    </style>
+
+    <!-- Custom Padding -->
+    <style>
+      h2 {
+        padding-right: 15px;
+        padding-left: 15px;
+        padding-top: 0px;
+        padding-bottom: 0px;
+      }
+    </style>
+
+    <style>
+      h3 {
+        padding-right: 15px;
+        padding-left: 15px;
+        padding-top: 0px;
+        padding-bottom: 0px;
+      }
+    </style>
+
+    <style>
+      h4 {
+        padding-right: 15px;
+        padding-left: 15px;
+        padding-top: 0px;
+        padding-bottom: 0px;
+      }
+    </style>
+    
+    <style>
+      p {
+        padding-right: 15px;
+        padding-left: 15px;
+        padding-top: 0px;
+        padding-bottom: 0px;
+      }
+    </style>
+
+    <!-- Style for Top Navigation Bar -->
+    <style>
+        #top{
+            height: 500px;
+        }
+
+        #middle{
+            height: 3300px;
+        }
+
+        #bottom{
+            height: 1300px;
+        }
+
+        body {
+          margin: 0;
+          font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .topnav {
+          overflow: hidden;
+          background-color: #333;
+        }
+
+        .topnav a {
+          float: left;
+          display: block;
+          color: #f2f2f2;
+          text-align: center;
+          padding: 14px 16px;
+          text-decoration: none;
+          font-size: 17px;
+        }
+
+        .topnav a:hover {
+          background-color: rgba(63, 206, 134, .9);
+          color: white;
+        }
+
+        .topnav a.active {
+          background-color: #333;
+          color: white;
+        }
+
+        .topnav .icon {
+          display: none;
+        }
+
+        @media screen and (max-width: 600px) {
+          .topnav a:not(:first-child) {display: none;}
+          .topnav a.icon {
+            float: right;
+            display: block;
+          }
+        }
+
+        @media screen and (max-width: 600px) {
+          .topnav.responsive {position: relative;}
+          .topnav.responsive .icon {
+            position: absolute;
+            right: 0;
+            top: 0;
+          }
+          .topnav.responsive a {
+            float: none;
+            display: block;
+            text-align: left;
+          }
+        }
+    </style> 
+
+    <!-- Style for Vertical Tabs -->
+    <style>
+      * {box-sizing: border-box}
+      body {font-family: "Lato", sans-serif;}
+      
+      /* Style the tab */
+      .tab {
+        float: left;
+        border: 1px solid #ccc;
+        background-color: #f1f1f1;
+        width: 18%;
+        height: 3100px;
+      }
+      
+      /* Style the buttons inside the tab */
+      .tab button {
+        display: block;
+        background-color: inherit;
+        color: black;
+        padding: 22px 16px;
+        width: 100%;
+        border: none;
+        outline: none;
+        text-align: left;
+        cursor: pointer;
+        transition: 0.3s;
+        font-size: 17px;
+      }
+      
+      /* Change background color of buttons on hover */
+      .tab button:hover {
+        background-color: #ddd;
+      }
+      
+      /* Create an active/current "tab button" class */
+      .tab button.active {
+        background-color: #ccc;
+      }
+      
+      /* Style the tab content */
+      .tabcontent {
+        float: left;
+        padding: 0px 12px;
+        border: 1px solid #ccc;
+        width: 82%;
+        border-left: none;
+        height: 3100px;
+      }
+    </style>
+
+    <!-- Style for Shorter Vertical Tabs -->
+    <style>
+      * {box-sizing: border-box}
+      body {font-family: "Lato", sans-serif;}
+      
+      /* Style the tab */
+      .svtab {
+        float: left;
+        border: 1px solid #ccc;
+        background-color: #f1f1f1;
+        width: 18%;
+        height: 1200px;
+      }
+      
+      /* Style the buttons inside the tab */
+      .svtab button {
+        display: block;
+        background-color: inherit;
+        color: black;
+        padding: 22px 16px;
+        width: 100%;
+        border: none;
+        outline: none;
+        text-align: left;
+        cursor: pointer;
+        transition: 0.3s;
+        font-size: 17px;
+      }
+      
+      /* Change background color of buttons on hover */
+      .svtab button:hover {
+        background-color: #ddd;
+      }
+      
+      /* Create an active/current "tab button" class */
+      .svtab button.active {
+        background-color: #ccc;
+      }
+      
+      /* Style the tab content */
+      .svtabcontent {
+        float: left;
+        padding: 0px 12px;
+        border: 1px solid #ccc;
+        width: 82%;
+        border-left: none;
+        height: 1200px;
+      }
+    </style>
+
+    <!-- Style for Horizontal Tabs -->
+    <style>
+    body {font-family: Arial;}
+
+    /* Style the tab */
+    .htab {
+      overflow: hidden;
+      border: 1px solid #ccc;
+      background-color: #f1f1f1;
+      width: 95%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Style the buttons inside the tab */
+    .htab button {
+      background-color: inherit;
+      float: left;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      padding: 14px 16px;
+      transition: 0.3s;
+      font-size: 17px;
+    }
+
+    /* Change background color of buttons on hover */
+    .htab button:hover {
+      background-color: #ddd;
+    }
+
+    /* Create an active/current tablink class */
+    .htab button.active {
+      background-color: rgba(63, 206, 134, .9);
+    }
+
+    /* Style the tab content */
+    .htabcontent {
+      display: none;
+      padding: 6px 12px;
+      border: 1px solid #ffffff;
+      border-top: none;
+    }
+    </style>
+
+    <!-- Style for Block Button -->
+    <style>
+      .block {
+        display: block;
+        width: 60%;
+        border: none;
+        background-color: #ccc;
+        color: black;
+        padding: 14px 28px;
+        font-size: 16px;
+        cursor: pointer;
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      
+      .block:hover {
+        background-color: #ddd;
+        color: black;
+      }
+    </style>
+
+
+    <!-- Style for Header Block Button -->
+    <style>
+          .headblock {
+            display: block;
+            border: none;
+            width: 100%;
+            background-color: rgba(63, 206, 134, .9);
+            color: white;
+            padding: 14px 28px;
+            font-size: 16px;
+            cursor: pointer;
+            text-align: center;
+          }
+    </style>
+
+    <!-- Style for White Block -->
+    <style>
+      .whiteblock {
+        display: block;
+        width: 60%;
+        border: none;
+        background-color: white;
+        color: black;
+        font-size: 16px;
+        cursor: pointer;
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    </style>
+</head>
+
+<body>
+    <!-- Top Nav Bar -->
+    <div class="topnav" id="myTopnav">
+      <a href="#top">Home</a>
+      <a href="#middle">Analysis of A Week's Data</a>
+      <a href="#bottom">Live Data Feed</a>
+      <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+        <i class="fa fa-bars"></i>
+      </a>
+    </div>
+
+<div id="top">
+  <button class="headblock">What is this project about?</button>
+  <h1 class="logo">
+    <span class="word1">Your</span>
+    <span class="word2">Breath</span>
+  </h1>
+  <button class="whiteblock">  
+    <p> Analysis by the British Heart Foundation (BHF) shows that London residents are breathing in toxins equivalent to 160 cigarettes a year. The effects 
+      of air pollution in the circulatory and pulmonary systems can be devastating, especially for young children. While many of us avoid traffic-heavy areas
+    when cycling and fear the outdoors; have we ever thought about how stagnated air indoors can affect our family?
+    <br>
+    <br>
+    In this project, we will measure the amount of toxic particles, like NO2, in the air (PPM) while also considering environmental factors like temperature and humidity. 
+      Sensors were placed both indoors and outdoors.</p>
+    <p>PROJECT BY: PILAR ZHANG QIU, 2020</p>
+</button>
+
+</div>
+
+<div id="middle">
+    <button class="headblock">Analysis of A Week's Data</button>
+    <!-- Vertical Tabs -->
+    <h2>Air Quality & Context Variables Report</h2>
+    <p>Here you can visualize the (1) Air quality, (2) Temperature and (3) Humidity data for the week of January 3-10, 2020.
+      To view these values indoors and outdoors in Hammersmith (London), click on the buttons inside the tabbed menu:</p>
+    
+    <div class="tab">
+      <button class="tablinks" onclick="openTab(event, 'Hour_View')" id="defaultOpen">Hour View</button>
+      <button class="tablinks" onclick="openTab(event, 'Day_View')">Day View</button>
+      <button class="tablinks" onclick="openTab(event, 'Week_View')">Week View</button>
+    </div>
+    
+    <div id="Hour_View" class="tabcontent">
+      <h3>Hour View</h3>
+      <p>Here you can visualize the data for a selected hour (in mins).
+        The current view is set to view:</p>
+      <button class="block">Wednesday - January 8, 2020 (10AM - 11AM)</button>
+      <h4>Air Quality (PPM)</h4>
+      <canvas id="AQ1HR_mins" width="800" height="600"></canvas>
+      <h4>Temperature (*C)</h4>
+      <canvas id="Temp1HR_mins" width="800" height="600"></canvas>
+      <h4>Humidity (%)</h4>
+      <canvas id="Hum1HR_mins" width="800" height="600"></canvas>
+    </div>
+    
+    <div id="Day_View" class="tabcontent">
+      <h3>Day View</h3>
+      <p>Here you can visualize the data for a selected day (in periods of 30 mins).
+        To toggle the selected day, click on the buttons below.</p>
+              <div class="htab">
+                <button class="htablinks" onclick="openHTabs(event, 'Day0')" id="defaultOpen">Friday - January 3, 2020</button>
+                <button class="htablinks" onclick="openHTabs(event, 'Day1')">Saturday - January 4, 2020</button>
+                <button class="htablinks" onclick="openHTabs(event, 'Day2')">Sunday - January 5, 2020</button>
+                <button class="htablinks" onclick="openHTabs(event, 'Day3')">Monday - January 6, 2020</button>
+                <button class="htablinks" onclick="openHTabs(event, 'Day4')">Tuesday - January 7, 2020</button>
+                <button class="htablinks" onclick="openHTabs(event, 'Day5')">Wednesday - January 8, 2020</button>
+                <button class="htablinks" onclick="openHTabs(event, 'Day6')">Thursday - January 9, 2020</button>
+                <button class="htablinks" onclick="openHTabs(event, 'Day7')">Friday - January 10, 2020</button>
+              </div>
+
+              <div id="Day0" class="htabcontent">
+                <h4>Air Quality (PPM)</h4>
+                <canvas id="AQ0D_hr" width="800" height="600"></canvas>
+                <h4>Temperature (*C)</h4>
+                <canvas id="Temp0D_hr" width="800" height="600"></canvas>
+                <h4>Humidity (%)</h4>
+                <canvas id="Hum0D_hr" width="800" height="600"></canvas>
+              </div>
+
+              <div id="Day1" class="htabcontent">
+                <h4>Air Quality (PPM)</h4>
+                <canvas id="AQ1D_hr" width="800" height="600"></canvas>
+                <h4>Temperature (*C)</h4>
+                <canvas id="Temp1D_hr" width="800" height="600"></canvas>
+                <h4>Humidity (%)</h4>
+                <canvas id="Hum1D_hr" width="800" height="600"></canvas>
+              </div>
+
+              <div id="Day2" class="htabcontent">
+                <h4>Air Quality (PPM)</h4>
+                <canvas id="AQ2D_hr" width="800" height="600"></canvas>
+                <h4>Temperature (*C)</h4>
+                <canvas id="Temp2D_hr" width="800" height="600"></canvas>
+                <h4>Humidity (%)</h4>
+                <canvas id="Hum2D_hr" width="800" height="600"></canvas>
+              </div>
+              
+              <div id="Day3" class="htabcontent">
+                <h4>Air Quality (PPM)</h4>
+                <canvas id="AQ3D_hr" width="800" height="600"></canvas>
+                <h4>Temperature (*C)</h4>
+                <canvas id="Temp3D_hr" width="800" height="600"></canvas>
+                <h4>Humidity (%)</h4>
+                <canvas id="Hum3D_hr" width="800" height="600"></canvas>
+              </div>
+              
+              <div id="Day4" class="htabcontent">
+                <h4>Air Quality (PPM)</h4>
+                <canvas id="AQ4D_hr" width="800" height="600"></canvas>
+                <h4>Temperature (*C)</h4>
+                <canvas id="Temp4D_hr" width="800" height="600"></canvas>
+                <h4>Humidity (%)</h4>
+                <canvas id="Hum4D_hr" width="800" height="600"></canvas>
+              </div>
+              
+              <div id="Day5" class="htabcontent">
+                <h4>Air Quality (PPM)</h4>
+                <canvas id="AQ5D_hr" width="800" height="600"></canvas>
+                <h4>Temperature (*C)</h4>
+                <canvas id="Temp5D_hr" width="800" height="600"></canvas>
+                <h4>Humidity (%)</h4>
+                <canvas id="Hum5D_hr" width="800" height="600"></canvas>
+              </div>
+              
+              <div id="Day6" class="htabcontent">
+                <h4>Air Quality (PPM)</h4>
+                <canvas id="AQ6D_hr" width="800" height="600"></canvas>
+                <h4>Temperature (*C)</h4>
+                <canvas id="Temp6D_hr" width="800" height="600"></canvas>
+                <h4>Humidity (%)</h4>
+                <canvas id="Hum6D_hr" width="800" height="600"></canvas>
+              </div>
+              
+              <div id="Day7" class="htabcontent">
+                <h4>Air Quality (PPM)</h4>
+                <canvas id="AQ7D_hr" width="800" height="600"></canvas>
+                <h4>Temperature (*C)</h4>
+                <canvas id="Temp7D_hr" width="800" height="600"></canvas>
+                <h4>Humidity (%)</h4>
+                <canvas id="Hum7D_hr" width="800" height="600"></canvas>
+              </div>
+    </div>
+    
+    <div id="Week_View" class="tabcontent">
+      <h3>Week View</h3>
+      <p>Here you can visualize the data for the week of January 3-10, 2020 (in days).</p>
+      <h4>Air Quality (PPM)</h4>
+      <canvas id="AQ1W_d" width="800" height="600"></canvas>
+      <h4>Temperature (*C)</h4>
+      <canvas id="Temp1W_d" width="800" height="600"></canvas>
+      <h4>Humidity (%)</h4>
+      <canvas id="Hum1W_d" width="800" height="600"></canvas>
+    </div>
+    
+    <script>
+      function myFunction() {
+        var x = document.getElementById("myTopnav");
+        if (x.className === "topnav") {
+          x.className += " responsive";
+        } else {
+          x.className = "topnav";
+        }
+      }
+    </script>
+
+    <script>
+      $(function(){
+      var sheetUrl = 'https://spreadsheets.google.com/feeds/cells/10zDDvXppl4g0pgKxvKoFc9DZtFC5knse__5Lb78Xs1s/2/public/full?alt=json';
+      $.getJSON(sheetUrl, function(data){
+        var entry = data.feed.entry;
+        var timestamp = []; // the leftmost column of the Google Sheets
+        var AQPPM_Out = []; // third-left column
+        var Temp_Out = []; // fourth-left column
+        var Hum_Out = []; // fifth-left column
+        var AQPPM_In = []; // seventh-left column
+        var Temp_In = []; // eight-left column
+        var Hum_In = []; // last column
+
+      for (var i = 9; i < entry.length; i += 9){
+          // entry[i].content.$t retrieves the content of each cell
+          timestamp.push(entry[i].content.$t);
+          AQPPM_Out.push(entry[i+2].content.$t);
+          Temp_Out.push(entry[i+3].content.$t);
+          Hum_Out.push(entry[i+4].content.$t);
+          AQPPM_In.push(entry[i+6].content.$t);
+          Temp_In.push(entry[i+7].content.$t);
+          Hum_In.push(entry[i+8].content.$t);
+        }
+
+// Converting strg to numbers ----------------------------------
+    var newAQ_Out = AQPPM_Out.map(Number);
+    var newTemp_Out = Temp_Out.map(Number);
+    var newHum_Out = Hum_Out.map(Number);
+    var newAQ_In = AQPPM_In.map(Number);
+    var newTemp_In = Temp_In.map(Number);
+    var newHum_In = Hum_In.map(Number);
+    
+// Function to Slice Arrays ----------------------------------
+function chunkArray(myArray, chunk_size){
+    var index = 0;
+    var arrayLength = myArray.length;
+    var tempArray = [];
+    
+    for (index = 0; index < arrayLength; index += chunk_size) {
+        myChunk = myArray.slice(index, index+chunk_size);
+        // Do something if you want with the group
+        tempArray.push(myChunk);
+    }
+    return tempArray;
+}
+
+// Function to return the 1st timestamp of each subarray -----------------
+function getFirst(myArray){
+    var index = 0;
+    var arrayLength = myArray.length;
+    var tempArray = [];
+
+    for (index = 0; index < arrayLength; index += 1) {
+        first = myArray[index][0]
+        tempArray.push(first);
+      
+        }
+    
+    return tempArray;
+}
+
+// Function to Sum All Elements in Array -----------------------
+function total(input){
+  var myTotal = 0;  // Variable to hold your total
+  for(var i = 0, len = input.length; i < len; i++) {
+      myTotal += input[i];  // Iterate over your first array and then grab the second element add the values up
+  }
+  return myTotal;
+}
+
+
+// Function to return avg value of array elements -----------------
+function avgArray(myArray){
+    var index = 0;
+    var arrayLength = myArray.length;
+    var tempArray = [];
+
+    for (index = 0; index < arrayLength; index += 1) {
+        sum = total(myArray[index])
+        var subarrayLength = myArray[index].length;
+        avg = sum/subarrayLength;
+        tempArray.push(avg);
+      
+        }
+    
+    return tempArray;
+}
+
+// Slicing Arrays ----------------------------------
+// Per hour, in mins ----------------------------------------
+var timestamp_1H = chunkArray(timestamp, 60);
+var newAQ_Out_1H = chunkArray(newAQ_Out, 60);
+var newTemp_Out_1H = chunkArray(newTemp_Out, 60);
+var newHum_Out_1H = chunkArray(newHum_Out, 60);
+var newAQ_In_1H = chunkArray(newAQ_In, 60);
+var newTemp_In_1H = chunkArray(newTemp_In, 60);
+var newHum_In_1H = chunkArray(newHum_In, 60);
+
+// Avg
+var timestamp_avg1H = getFirst(timestamp_1H);
+var newAQ_Out_avg1H = avgArray(newAQ_Out_1H);
+var newTemp_Out_avg1H = avgArray(newTemp_Out_1H);
+var newHum_Out_avg1H = avgArray(newHum_Out_1H);
+var newAQ_In_avg1H = avgArray(newAQ_In_1H);
+var newTemp_In_avg1H = avgArray(newTemp_In_1H);
+var newHum_In_avg1H = avgArray(newHum_In_1H);
+
+
+// In days (total 7 days) ----------------------------------------
+var timestamp_1D = chunkArray(timestamp, 1440);
+var newAQ_Out_1D = chunkArray(newAQ_Out, 1440);
+var newTemp_Out_1D = chunkArray(newTemp_Out, 1440);
+var newHum_Out_1D = chunkArray(newHum_Out, 1440);
+var newAQ_In_1D = chunkArray(newAQ_In, 1440);
+var newTemp_In_1D = chunkArray(newTemp_In, 1440);
+var newHum_In_1D = chunkArray(newHum_In, 1440);
+
+// Avg
+var timestamp_avg1D = getFirst(timestamp_1D);
+var newAQ_Out_avg1D = avgArray(newAQ_Out_1D);
+var newTemp_Out_avg1D = avgArray(newTemp_Out_1D);
+var newHum_Out_avg1D = avgArray(newHum_Out_1D);
+var newAQ_In_avg1D = avgArray(newAQ_In_1D);
+var newTemp_In_avg1D = avgArray(newTemp_In_1D);
+var newHum_In_avg1D = avgArray(newHum_In_1D);
+
+// Per day, in intervals of 30 mins ----------------------------------------
+var timestamp_30M = chunkArray(timestamp, 30);
+var newAQ_Out_30M = chunkArray(newAQ_Out, 30);
+var newTemp_Out_30M = chunkArray(newTemp_Out, 30);
+var newHum_Out_30M = chunkArray(newHum_Out, 30);
+var newAQ_In_30M = chunkArray(newAQ_In, 30);
+var newTemp_In_30M = chunkArray(newTemp_In, 30);
+var newHum_In_30M = chunkArray(newHum_In, 30);
+
+// Avg
+var timestamp_avg30M = getFirst(timestamp_30M);
+var newAQ_Out_avg30M = avgArray(newAQ_Out_30M);
+var newTemp_Out_avg30M = avgArray(newTemp_Out_30M);
+var newHum_Out_avg30M = avgArray(newHum_Out_30M);
+var newAQ_In_avg30M = avgArray(newAQ_In_30M);
+var newTemp_In_avg30M = avgArray(newTemp_In_30M);
+var newHum_In_avg30M = avgArray(newHum_In_30M);
+
+//Splice in days
+var day0_time30M = timestamp_avg30M.slice(0, 22);   // begin is zero, slice begins from index 0 to the 22nd element. 
+var day0_AQOut30M = newAQ_Out_avg30M.slice(0, 22);   
+var day0_TempOut30M = newTemp_Out_avg30M.slice(0, 22);   
+var day0_HumOut30M = newHum_Out_avg30M.slice(0, 22);   
+var day0_AQIn30M = newAQ_In_avg30M.slice(0, 22);   
+var day0_TempIn30M = newTemp_In_avg30M.slice(0, 22);    
+var day0_HumIn30M = newHum_In_avg30M.slice(0, 22);    
+
+var day1_time30M = timestamp_avg30M.slice(22, 68); 
+var day1_AQOut30M = newAQ_Out_avg30M.slice(22, 68);   
+var day1_TempOut30M = newTemp_Out_avg30M.slice(22, 68);   
+var day1_HumOut30M = newHum_Out_avg30M.slice(22, 68);   
+var day1_AQIn30M = newAQ_In_avg30M.slice(22, 68);   
+var day1_TempIn30M = newTemp_In_avg30M.slice(22, 68);  
+var day1_HumIn30M = newHum_In_avg30M.slice(22, 68);   
+
+var day2_time30M = timestamp_avg30M.slice(68, 114); 
+var day2_AQOut30M = newAQ_Out_avg30M.slice(68, 114);   
+var day2_TempOut30M = newTemp_Out_avg30M.slice(68, 114);   
+var day2_HumOut30M = newHum_Out_avg30M.slice(68, 114);   
+var day2_AQIn30M = newAQ_In_avg30M.slice(68, 114);   
+var day2_TempIn30M = newTemp_In_avg30M.slice(68, 114);  
+var day2_HumIn30M = newHum_In_avg30M.slice(68, 114);   
+
+var day3_time30M = timestamp_avg30M.slice(114, 161); 
+var day3_AQOut30M = newAQ_Out_avg30M.slice(114, 161);   
+var day3_TempOut30M = newTemp_Out_avg30M.slice(114, 161);   
+var day3_HumOut30M = newHum_Out_avg30M.slice(114, 161);   
+var day3_AQIn30M = newAQ_In_avg30M.slice(114, 161);   
+var day3_TempIn30M = newTemp_In_avg30M.slice(114, 161);  
+var day3_HumIn30M = newHum_In_avg30M.slice(114, 161); 
+
+var day4_time30M = timestamp_avg30M.slice(161, 208); 
+var day4_AQOut30M = newAQ_Out_avg30M.slice(161, 208);   
+var day4_TempOut30M = newTemp_Out_avg30M.slice(161, 208);   
+var day4_HumOut30M = newHum_Out_avg30M.slice(161, 208);   
+var day4_AQIn30M = newAQ_In_avg30M.slice(161, 208);   
+var day4_TempIn30M = newTemp_In_avg30M.slice(161, 208);  
+var day4_HumIn30M = newHum_In_avg30M.slice(161, 208);
+
+var day5_time30M = timestamp_avg30M.slice(208, 255); 
+var day5_AQOut30M = newAQ_Out_avg30M.slice(208, 255);   
+var day5_TempOut30M = newTemp_Out_avg30M.slice(208, 255);   
+var day5_HumOut30M = newHum_Out_avg30M.slice(208, 255);   
+var day5_AQIn30M = newAQ_In_avg30M.slice(208, 255);   
+var day5_TempIn30M = newTemp_In_avg30M.slice(208, 255);  
+var day5_HumIn30M = newHum_In_avg30M.slice(208, 255);
+
+var day6_time30M = timestamp_avg30M.slice(255, 302); 
+var day6_AQOut30M = newAQ_Out_avg30M.slice(255, 302);   
+var day6_TempOut30M = newTemp_Out_avg30M.slice(255, 302);   
+var day6_HumOut30M = newHum_Out_avg30M.slice(255, 302);   
+var day6_AQIn30M = newAQ_In_avg30M.slice(255, 302);   
+var day6_TempIn30M = newTemp_In_avg30M.slice(255, 302);  
+var day6_HumIn30M = newHum_In_avg30M.slice(255, 302);
+
+var day7_time30M = timestamp_avg30M.slice(302, 348); 
+var day7_AQOut30M = newAQ_Out_avg30M.slice(302, 348);   
+var day7_TempOut30M = newTemp_Out_avg30M.slice(302, 348);   
+var day7_HumOut30M = newHum_Out_avg30M.slice(302, 348);   
+var day7_AQIn30M = newAQ_In_avg30M.slice(302, 348);   
+var day7_TempIn30M = newTemp_In_avg30M.slice(302, 348);  
+var day7_HumIn30M = newHum_In_avg30M.slice(302, 348);
+
+// ----------------------------------------
+var i = 114;
+timestamp_1H = timestamp_1H[i]
+newAQ_Out_1H = newAQ_Out_1H[i]
+newTemp_Out_1H = newTemp_Out_1H[i]
+newHum_Out_1H = newHum_Out_1H[i]
+newAQ_In_1H = newAQ_In_1H[i]
+newTemp_In_1H = newTemp_In_1H[i]
+newHum_In_1H = newHum_In_1H[i]
+
+
+//Charts Air Quality 1HR in Mins ----------------------------------
+var ctx = document.getElementById('AQ1HR_mins').getContext('2d');
+    var AQ1HR_mins = new Chart(ctx, {
+              type: 'line',
+              data: {
+                  labels: timestamp_1H,
+                  datasets: [{
+                      label: 'Air Quality Outside (PPM)',
+                      fill: true,
+                      data: newAQ_Out_1H,
+                      borderColor: 'rgba(141, 141, 141, .9)', //grey
+                      borderWidth: 3,
+                      backgroundColor: 'rgba(141, 141, 141, .3)',
+                      pointHoverBackgroundColor: '#FFFFFF',
+                      pointHoverBorderColor: '#333',
+                      pointHoverBorderWidth: 3,
+                  },{
+                      label: 'Air Quality Inside (PPM)',
+                      fill: true,
+                      data: newAQ_In_1H,
+                      borderColor: 'rgba(63, 206, 134, .9)',  //green
+                      borderWidth: 3,
+                      backgroundColor: 'rgba(63, 206, 134, .3)',
+                      pointHoverBackgroundColor: '#FFFFFF',
+                      pointHoverBorderColor: '#333',
+                      pointHoverBorderWidth: 3,
+                  }
+                ]
+              },
+              options: {
+                  scales: {
+                      yAxes: [{
+                          ticks: {
+                              beginAtZero:true,
+                              max: 1700,
+                              min: 200,
+                              stepSize: 50
+                          }
+                      }],
+                      xAxes: [{
+                          ticks: {
+                              autoSkip: true
+                          },
+                          gridLines: {
+                            display: false
+                          }
+                      }]
+                  },
+                  legend: {
+                    position: 'bottom',
+                    labels:{
+                      boxWidth: 15,
+                      fontSize: 15,
+                    },
+                  },
+              }
+          });
+//Charts Temp 1HR in Mins ----------------------------------
+var ctx = document.getElementById('Temp1HR_mins').getContext('2d');
+    var Temp1HR_mins = new Chart(ctx, {
+              type: 'line',
+              data: {
+                  labels: timestamp_1H,
+                  datasets: [{
+                      label: 'Temperature Outside (*C)',
+                      fill: true,
+                      data: newTemp_Out_1H,
+                      borderColor: 'rgba(141, 141, 141, .9)', //grey
+                      borderWidth: 3,
+                      backgroundColor: 'rgba(141, 141, 141, .3)',
+                      pointHoverBackgroundColor: '#FFFFFF',
+                      pointHoverBorderColor: '#333',
+                      pointHoverBorderWidth: 3,
+                  },{
+                      label: 'Temperature Inside (*C)',
+                      fill: true,
+                      data: newTemp_In_1H,
+                      borderColor: 'rgba(199, 0, 57, .9)',  //red
+                      borderWidth: 3,
+                      backgroundColor: 'rgba(199, 0, 57, .3)',
+                      pointHoverBackgroundColor: '#FFFFFF',
+                      pointHoverBorderColor: '#333',
+                      pointHoverBorderWidth: 3,
+                  }
+                ]
+              },
+              options: {
+                  scales: {
+                      yAxes: [{
+                          ticks: {
+                              beginAtZero:true,
+                              max: 25,
+                              min: 0,
+                              stepSize: 1
+                          }
+                      }],
+                      xAxes: [{
+                        ticks: {
+                              autoSkip: true
+                          },
+                          gridLines: {
+                            display: false
+                          }
+                      }]
+                  },
+                  legend: {
+                    position: 'bottom',
+                    labels:{
+                      boxWidth: 15,
+                      fontSize: 15,
+                    },
+                  },
+              }
+          });
+
+//Charts Hum 1HR in Mins ----------------------------------
+var ctx = document.getElementById('Hum1HR_mins').getContext('2d');
+    var Hum1HR_mins = new Chart(ctx, {
+              type: 'line',
+              data: {
+                  labels: timestamp_1H,
+                  datasets: [{
+                      label: 'Humidity Outside (%)',
+                      fill: true,
+                      data: newHum_Out_1H,
+                      borderColor: 'rgba(141, 141, 141, .9)', //grey
+                      borderWidth: 3,
+                      backgroundColor: 'rgba(141, 141, 141, .3)',
+                      pointHoverBackgroundColor: '#FFFFFF',
+                      pointHoverBorderColor: '#333',
+                      pointHoverBorderWidth: 3,
+                  },{
+                      label: 'Humidity Inside (%)',
+                      fill: true,
+                      data: newHum_In_1H,
+                      borderColor: 'rgba(255, 195, 0, .9)', //yellow
+                      borderWidth: 3,
+                      backgroundColor: 'rgba(255, 195, 0, .3)',
+                      pointHoverBackgroundColor: '#FFFFFF',
+                      pointHoverBorderColor: '#333',
+                      pointHoverBorderWidth: 3,
+                  }
+                ]
+              },
+              options: {
+                  scales: {
+                      yAxes: [{
+                          ticks: {
+                              beginAtZero:true,
+                              max: 100,
+                              min: 0,
+                              stepSize: 10
+                          }
+                      }],
+                      xAxes: [{
+                        ticks: {
+                              autoSkip: true
+                          },
+                          gridLines: {
+                            display: false
+                          }
+                      }]
+                  },
+                  legend: {
+                    position: 'bottom',
+                    labels:{
+                      boxWidth: 15,
+                      fontSize: 15,
+                    },
+                  },
+              }
+          });
+//-----------------------------------------------------------------
+//-----------------------------------------------------------------
+//-----------------------------------------------------------------
+
+//Charts Air Quality Day 0 in 30mins ----------------------------------
+var ctx = document.getElementById('AQ0D_hr').getContext('2d');
+    var AQ0D_hr = new Chart(ctx, {
+              type: 'line',
+              data: {
+                labels: day0_time30M,
+                  datasets: [{
+                      label: 'Air Quality Outside (PPM)',
+                      fill: true,
+                      data: day0_AQOut30M,
+                      borderColor: 'rgba(141, 141, 141, .9)',
+                      borderWidth: 3,
+                      backgroundColor: 'rgba(141, 141, 141, .3)', //grey
+                      pointHoverBackgroundColor: '#FFFFFF',
+                      pointHoverBorderColor: '#333',
+                      pointHoverBorderWidth: 3,
+                  },{
+                      label: 'Air Quality Inside (PPM)',
+                      fill: true,
+                      data: day0_AQIn30M,
+                      borderColor: 'rgba(63, 206, 134, .9)',
+                      borderWidth: 3,
+                      backgroundColor: 'rgba(63, 206, 134, .3)',
+                      pointHoverBackgroundColor: '#FFFFFF',
+                      pointHoverBorderColor: '#333',
+                      pointHoverBorderWidth: 3,
+                  }
+                ]
+              },
+              options: {
+                  scales: {
+                      yAxes: [{
+                          ticks: {
+                              beginAtZero:true,
+                              max: 1700,
+                              min: 200,
+                              stepSize: 50
+                          }
+                      }],
+                      xAxes: [{
+                        ticks: {
+                              autoSkip: true
+                          },
+                          gridLines: {
+                            display: false
+                          }
+                      }]
+                  },
+                  legend: {
+                    position: 'bottom',
+                    labels:{
+                      boxWidth: 15,
+                      fontSize: 15,
+                    },
+                  },
+              }
+          });
+
+//Charts Temp Day 0 in 30mins ----------------------------------
+var ctx = document.getElementById('Temp0D_hr').getContext('2d');
+    var Temp0D_hr = new Chart(ctx, {
+              type: 'line',
+              data: {
+                labels: day0_time30M,
+                  datasets: [{
+                      label: 'Temperature Outside (*C)',
+                      fill: true,
+                      data: day0_TempOut30M,
+                      borderColor: 'rgba(141, 141, 141, .9)', //grey
+                      borderWidth: 3,
+                      backgroundColor: 'rgba(141, 141, 141, .3)',
+                      pointHoverBackgroundColor: '#FFFFFF',
+                      pointHoverBorderColor: '#333',
+                      pointHoverBorderWidth: 3,
+                  },{
+                      label: 'Temperature Inside (*C)',
+                      fill: true,
+                      data: day0_TempIn30M,
+                      borderColor: 'rgba(199, 0, 57, .9)',  //red
+                      borderWidth: 3,
+                      backgroundColor: 'rgba(199, 0, 57, .3)',
+                      pointHoverBackgroundColor: '#FFFFFF',
+                      pointHoverBorderColor: '#333',
+                      pointHoverBorderWidth: 3,
+                  }
+                ]
+              },
+              options: {
+                  scales: {
+                      yAxes: [{
+                          ticks: {
+                              beginAtZero:true,
+                              max: 25,
+                              min: 0,
+                              stepSize: 1
+                          }
+                      }],
+                      xAxes: [{
+                        ticks: {
+                              autoSkip: true
+                          },
+                          gridLines: {
+                            display: false
+                          }
+                      }]
+                  },
+                  legend: {
+                    position: 'bottom',
+                    labels:{
+                      boxWidth: 15,
+                      fontSize: 15,
+                    },
+                  },
+              }
+          });
+
+//Charts Humidity Day 0 in 30mins ----------------------------------
+var ctx = document.getElementById('Hum0D_hr').getContext('2d');
+    var Hum0D_hr = new Chart(ctx, {
+              type: 'line',
+              data: {
+                labels: day0_time30M,
+                  datasets: [{
+                      label: 'Humidity Outside (%)',
+                      fill: true,
+                      data: day0_HumOut30M,
+                      borderColor: 'rgba(141, 141, 141, .9)', //grey
+                      borderWidth: 3,
+                      backgroundColor: 'rgba(141, 141, 141, .3)',
+                      pointHoverBackgroundColor: '#FFFFFF',
+                      pointHoverBorderColor: '#333',
+                      pointHoverBorderWidth: 3,
+                  },{
+                      label: 'Humidity Inside (%)',
+                      fill: true,
+                      data: day0_HumIn30M,
+                      borderColor: 'rgba(255, 195, 0, .9)', //yellow
+                      borderWidth: 3,
+                      backgroundColor: 'rgba(255, 195, 0, .3)',
+                      pointHoverBackgroundColor: '#FFFFFF',
+                      pointHoverBorderColor: '#333',
+                      pointHoverBorderWidth: 3,
+                  }
+                ]
+              },
+              options: {
+                  scales: {
+                      yAxes: [{
+                          ticks: {
+                              beginAtZero:true,
+                              max: 100,
+                              min: 0,
+                              stepSize: 10
+                          }
+                      }],
+                      xAxes: [{
+                        ticks: {
+                              autoSkip: true
+                          },
+                          gridLines: {
+                            display: false
+                          }
+                      }]
+                  },
+                  legend: {
+                    position: 'bottom',
+                    labels:{
+                      boxWidth: 15,
+                      fontSize: 15,
+                    },
+                  },
+              }
+          });
+
+////////////////////////////////////////////////////////////////////////
+
+//Charts Air Quality Day 1 in 30mins ----------------------------------
+var ctx = document.getElementById('AQ1D_hr').getContext('2d');
+    var AQ1D_hr = new Chart(ctx, {
+              type: 'line',
+              data: {
+                labels: day1_time30M,
+                  datasets: [{
+                      label: 'Air Quality Outside (PPM)',
+                      fill: true,
+                      data: day1_AQOut30M,
+                      borderColor: 'rgba(141, 141, 141, .9)',
+                      borderWidth: 3,
+                      backgroundColor: 'rgba(141, 141, 141, .3)', //grey
+                      pointHoverBackgroundColor: '#FFFFFF',
+                      pointHoverBorderColor: '#333',
+                      pointHoverBorderWidth: 3,
+                  },{
+                      label: 'Air Quality Inside (PPM)',
+                      fill: true,
+                      data: day1_AQIn30M,
+                      borderColor: 'rgba(63, 206, 134, .9)',
+                      borderWidth: 3,
+                      backgroundColor: 'rgba(63, 206, 134, .3)',
+                      pointHoverBackgroundColor: '#FFFFFF',
+                      pointHoverBorderColor: '#333',
+                      pointHoverBorderWidth: 3,
+                  }
+                ]
+              },
+              options: {
+                  scales: {
+                      yAxes: [{
+                          ticks: {
+                              beginAtZero:true,
+                              max: 1700,
+                              min: 200,
+                              stepSize: 50
+                          }
+                      }],
+                      xAxes: [{
+                        ticks: {
+                              autoSkip: true
+                          },
+                          gridLines: {
+                            display: false
+                          }
+                      }]
+                  },
+                  legend: {
+                    position: 'bottom',
+                    labels:{
+                      boxWidth: 15,
+                      fontSize: 15,
+                    },
+                  },
+              }
+          });
+
+//Charts Temp Day 1 in 30mins ----------------------------------
+var ctx = document.getElementById('Temp1D_hr').getContext('2d');
+    var Temp1D_hr = new Chart(ctx, {
+              type: 'line',
+              data: {
+                labels: day1_time30M,
+                  datasets: [{
+                      label: 'Temperature Outside (*C)',
+                      fill: true,
+                      data: day1_TempOut30M,
+                      borderColor: 'rgba(141, 141, 141, .9)', //grey
+                      borderWidth: 3,
+                      backgroundColor: 'rgba(141, 141, 141, .3)',
+                      pointHoverBackgroundColor: '#FFFFFF',
+                      pointHoverBorderColor: '#333',
+                      pointHoverBorderWidth: 3,
+                  },{
+                      label: 'Temperature Inside (*C)',
+                      fill: true,
+                      data: day1_TempIn30M,
+                      borderColor: 'rgba(199, 0, 57, .9)',  //red
+                      borderWidth: 3,
+                      backgroundColor: 'rgba(199, 0, 57, .3)',
+                      pointHoverBackgroundColor: '#FFFFFF',
+                      pointHoverBorderColor: '#333',
+                      pointHoverBorderWidth: 3,
+                  }
+                ]
+              },
+              options: {
+                  scales: {
+                      yAxes: [{
+                          ticks: {
+                              beginAtZero:true,
+                              max: 25,
+                              min: 0,
+                              stepSize: 1
+                          }
+                      }],
+                      xAxes: [{
+                        ticks: {
+                              autoSkip: true
+                          },
+                          gridLines: {
+                            display: false
+                          }
+                      }]
+                  },
+                  legend: {
+                    position: 'bottom',
+                    labels:{
+                      boxWidth: 15,
+                      fontSize: 15,
+                    },
+                  },
+              }
+          });
+
+//Charts Humidity Day 1 in 30mins ----------------------------------
+var ctx = document.getElementById('Hum1D_hr').getContext('2d');
+    var Hum1D_hr = new Chart(ctx, {
+              type: 'line',
+              data: {
+                labels: day1_time30M,
+                  datasets: [{
+                      label: 'Humidity Outside (%)',
+                      fill: true,
+                      data: day1_HumOut30M,
+                      borderColor: 'rgba(141, 141, 141, .9)', //grey
+                      borderWidth: 3,
+                      backgroundColor: 'rgba(141, 141, 141, .3)',
+                      pointHoverBackgroundColor: '#FFFFFF',
+                      pointHoverBorderColor: '#333',
+                      pointHoverBorderWidth: 3,
+                  },{
+                      label: 'Humidity Inside (%)',
+                      fill: true,
+                      data: day1_HumIn30M,
+                      borderColor: 'rgba(255, 195, 0, .9)', //yellow
+                      borderWidth: 3,
+                      backgroundColor: 'rgba(255, 195, 0, .3)',
+                      pointHoverBackgroundColor: '#FFFFFF',
+                      pointHoverBorderColor: '#333',
+                      pointHoverBorderWidth: 3,
+                  }
+                ]
+              },
+              options: {
+                  scales: {
+                      yAxes: [{
+                          ticks: {
+                              beginAtZero:true,
+                              max: 100,
+                              min: 0,
+                              stepSize: 10
+                          }
+                      }],
+                      xAxes: [{
+                        ticks: {
+                              autoSkip: true
+                          },
+                          gridLines: {
+                            display: false
+                          }
+                      }]
+                  },
+                  legend: {
+                    position: 'bottom',
+                    labels:{
+                      boxWidth: 15,
+                      fontSize: 15,
+                    },
+                  },
+              }
+          });
+
+////////////////////////////////////////////////////////////////////////
+
+//Charts Air Quality Day 2 in 30mins ----------------------------------
+var ctx = document.getElementById('AQ2D_hr').getContext('2d');
+    var AQ2D_hr = new Chart(ctx, {
+              type: 'line',
+              data: {
+                labels: day2_time30M,
+                  datasets: [{
+                      label: 'Air Quality Outside (PPM)',
+                      fill: true,
+                      data: day2_AQOut30M,
+                      borderColor: 'rgba(141, 141, 141, .9)',
+                      borderWidth: 3,
+                      backgroundColor: 'rgba(141, 141, 141, .3)', //grey
+                      pointHoverBackgroundColor: '#FFFFFF',
+                      pointHoverBorderColor: '#333',
+                      pointHoverBorderWidth: 3,
+                  },{
+                      label: 'Air Quality Inside (PPM)',
+                      fill: true,
+                      data: day2_AQIn30M,
+                      borderColor: 'rgba(63, 206, 134, .9)',
+                      borderWidth: 3,
+                      backgroundColor: 'rgba(63, 206, 134, .3)',
+                      pointHoverBackgroundColor: '#FFFFFF',
+                      pointHoverBorderColor: '#333',
+                      pointHoverBorderWidth: 3,
+                  }
+                ]
+              },
+              options: {
+                  scales: {
+                      yAxes: [{
+                          ticks: {
+                              beginAtZero:true,
+                              max: 1700,
+                              min: 200,
+                              stepSize: 50
+                          }
+                      }],
+                      xAxes: [{
+                        ticks: {
+                              autoSkip: true
+                          },
+                          gridLines: {
+                            display: false
+                          }
+                      }]
+                  },
+                  legend: {
+                    position: 'bottom',
+                    labels:{
+                      boxWidth: 15,
+                      fontSize: 15,
+                    },
+                  },
+              }
+          });
+
+//Charts Temp Day 2 in 30mins ----------------------------------
+var ctx = document.getElementById('Temp2D_hr').getContext('2d');
+    var Temp2D_hr = new Chart(ctx, {
+              type: 'line',
+              data: {
+                labels: day2_time30M,
+                  datasets: [{
+                      label: 'Temperature Outside (*C)',
+                      fill: true,
+                      data: day2_TempOut30M,
+                      borderColor: 'rgba(141, 141, 141, .9)', //grey
+                      borderWidth: 3,
+                      backgroundColor: 'rgba(141, 141, 141, .3)',
+                      pointHoverBackgroundColor: '#FFFFFF',
+                      pointHoverBorderColor: '#333',
+                      pointHoverBorderWidth: 3,
+                  },{
+                      label: 'Temperature Inside (*C)',
+                      fill: true,
+                      data: day2_TempIn30M,
+                      borderColor: 'rgba(199, 0, 57, .9)',  //red
+                      borderWidth: 3,
+                      backgroundColor: 'rgba(199, 0, 57, .3)',
+                      pointHoverBackgroundColor: '#FFFFFF',
+                      pointHoverBorderColor: '#333',
+                      pointHoverBorderWidth: 3,
+                  }
+                ]
+              },
+              options: {
+                  scales: {
+                      yAxes: [{
+                          ticks: {
+                              beginAtZero:true,
+                              max: 25,
+                              min: 0,
+                              stepSize: 1
+                          }
+                      }],
+                      xAxes: [{
+                        ticks: {
+                              autoSkip: true
+                          },
+                          gridLines: {
+                            display: false
+                          }
+                      }]
+                  },
+                  legend: {
+                    position: 'bottom',
+                    labels:{
+                      boxWidth: 15,
+                      fontSize: 15,
+                    },
+                  },
+              }
+          });
+
+//Charts Humidity Day 2 in 30mins ----------------------------------
+var ctx = document.getElementById('Hum2D_hr').getContext('2d');
+    var Hum2D_hr = new Chart(ctx, {
+              type: 'line',
+              data: {
+                labels: day2_time30M,
+                  datasets: [{
+                      label: 'Humidity Outside (%)',
+                      fill: true,
+                      data: day2_HumOut30M,
+                      borderColor: 'rgba(141, 141, 141, .9)', //grey
+                      borderWidth: 3,
+                      backgroundColor: 'rgba(141, 141, 141, .3)',
+                      pointHoverBackgroundColor: '#FFFFFF',
+                      pointHoverBorderColor: '#333',
+                      pointHoverBorderWidth: 3,
+                  },{
+                      label: 'Humidity Inside (%)',
+                      fill: true,
+                      data: day2_HumIn30M,
+                      borderColor: 'rgba(255, 195, 0, .9)', //yellow
+                      borderWidth: 3,
+                      backgroundColor: 'rgba(255, 195, 0, .3)',
+                      pointHoverBackgroundColor: '#FFFFFF',
+                      pointHoverBorderColor: '#333',
+                      pointHoverBorderWidth: 3,
+                  }
+                ]
+              },
+              options: {
+                  scales: {
+                      yAxes: [{
+                          ticks: {
+                              beginAtZero:true,
+                              max: 100,
+                              min: 0,
+                              stepSize: 10
+                          }
+                      }],
+                      xAxes: [{
+                        ticks: {
+                              autoSkip: true
+                          },
+                          gridLines: {
+                            display: false
+                          }
+                      }]
+                  },
+                  legend: {
+                    position: 'bottom',
+                    labels:{
+                      boxWidth: 15,
+                      fontSize: 15,
+                    },
+                  },
+              }
+          });
+
+////////////////////////////////////////////////////////////////////////
+
+//Charts Air Quality Day 3 in 30mins ----------------------------------
+var ctx = document.getElementById('AQ3D_hr').getContext('2d');
+    var AQ3D_hr = new Chart(ctx, {
+              type: 'line',
+              data: {
+                labels: day3_time30M,
+                  datasets: [{
+                      label: 'Air Quality Outside (PPM)',
+                      fill: true,
+                      data: day3_AQOut30M,
+                      borderColor: 'rgba(141, 141, 141, .9)',
+                      borderWidth: 3,
+                      backgroundColor: 'rgba(141, 141, 141, .3)', //grey
+                      pointHoverBackgroundColor: '#FFFFFF',
+                      pointHoverBorderColor: '#333',
+                      pointHoverBorderWidth: 3,
+                  },{
+                      label: 'Air Quality Inside (PPM)',
+                      fill: true,
+                      data: day3_AQIn30M,
+                      borderColor: 'rgba(63, 206, 134, .9)',
+                      borderWidth: 3,
+                      backgroundColor: 'rgba(63, 206, 134, .3)',
+                      pointHoverBackgroundColor: '#FFFFFF',
+                      pointHoverBorderColor: '#333',
+                      pointHoverBorderWidth: 3,
+                  }
+                ]
+              },
+              options: {
+                  scales: {
+                      yAxes: [{
+                          ticks: {
+                              beginAtZero:true,
+                              max: 1700,
+                              min: 200,
+                              stepSize: 50
+                          }
+                      }],
+                      xAxes: [{
+                        ticks: {
+                              autoSkip: true
+                          },
+                          gridLines: {
+                            display: false
+                          }
+                      }]
+                  },
+                  legend: {
+                    position: 'bottom',
+                    labels:{
+                      boxWidth: 15,
+                      fontSize: 15,
+                    },
+                  },
+              }
+          });
+
+//Charts Temp Day 3 in 30mins ----------------------------------
+var ctx = document.getElementById('Temp3D_hr').getContext('2d');
+    var Temp3D_hr = new Chart(ctx, {
+              type: 'line',
+              data: {
+                labels: day3_time30M,
+                  datasets: [{
+                      label: 'Temperature Outside (*C)',
+                      fill: true,
+                      data: day3_TempOut30M,
+                      borderColor: 'rgba(141, 141, 141, .9)', //grey
+                      borderWidth: 3,
+                      backgroundColor: 'rgba(141, 141, 141, .3)',
+                      pointHoverBackgroundColor: '#FFFFFF',
+                      pointHoverBorderColor: '#333',
+                      pointHoverBorderWidth: 3,
+                  },{
+                      label: 'Temperature Inside (*C)',
+                      fill: true,
+                      data: day3_TempIn30M,
+                      borderColor: 'rgba(199, 0, 57, .9)',  //red
+                      borderWidth: 3,
+                      backgroundColor: 'rgba(199, 0, 57, .3)',
+                      pointHoverBackgroundColor: '#FFFFFF',
+                      pointHoverBorderColor: '#333',
+                      pointHoverBorderWidth: 3,
+                  }
+                ]
+              },
+              options: {
+                  scales: {
+                      yAxes: [{
+                          ticks: {
+                              beginAtZero:true,
+                              max: 25,
+                              min: 0,
+                              stepSize: 1
+                          }
+                      }],
+                      xAxes: [{
+                        ticks: {
+                              autoSkip: true
+                          },
+                          gridLines: {
+                            display: false
+                          }
+                      }]
+                  },
+                  legend: {
+                    position: 'bottom',
+                    labels:{
+                      boxWidth: 15,
+                      fontSize: 15,
+                    },
+                  },
+              }
+          });
+
+//Charts Humidity Day 3 in 30mins ----------------------------------
+var ctx = document.getElementById('Hum3D_hr').getContext('2d');
+    var Hum3D_hr = new Chart(ctx, {
+              type: 'line',
+              data: {
+                labels: day3_time30M,
+                  datasets: [{
+                      label: 'Humidity Outside (%)',
+                      fill: true,
+                      data: day3_HumOut30M,
+                      borderColor: 'rgba(141, 141, 141, .9)', //grey
+                      borderWidth: 3,
+                      backgroundColor: 'rgba(141, 141, 141, .3)',
+                      pointHoverBackgroundColor: '#FFFFFF',
+                      pointHoverBorderColor: '#333',
+                      pointHoverBorderWidth: 3,
+                  },{
+                      label: 'Humidity Inside (%)',
+                      fill: true,
+                      data: day3_HumIn30M,
+                      borderColor: 'rgba(255, 195, 0, .9)', //yellow
+                      borderWidth: 3,
+                      backgroundColor: 'rgba(255, 195, 0, .3)',
+                      pointHoverBackgroundColor: '#FFFFFF',
+                      pointHoverBorderColor: '#333',
+                      pointHoverBorderWidth: 3,
+                  }
+                ]
+              },
+              options: {
+                  scales: {
+                      yAxes: [{
+                          ticks: {
+                              beginAtZero:true,
+                              max: 100,
+                              min: 0,
+                              stepSize: 10
+                          }
+                      }],
+                      xAxes: [{
+                        ticks: {
+                              autoSkip: true
+                          },
+                          gridLines: {
+                            display: false
+                          }
+                      }]
+                  },
+                  legend: {
+                    position: 'bottom',
+                    labels:{
+                      boxWidth: 15,
+                      fontSize: 15,
+                    },
+                  },
+              }
+          });
+
+////////////////////////////////////////////////////////////////////////
+
+//Charts Air Quality Day 4 in 30mins ----------------------------------
+var ctx = document.getElementById('AQ4D_hr').getContext('2d');
+    var AQ4D_hr = new Chart(ctx, {
+              type: 'line',
+              data: {
+                labels: day4_time30M,
+                  datasets: [{
+                      label: 'Air Quality Outside (PPM)',
+                      fill: true,
+                      data: day4_AQOut30M,
+                      borderColor: 'rgba(141, 141, 141, .9)',
+                      borderWidth: 3,
+                      backgroundColor: 'rgba(141, 141, 141, .3)', //grey
+                      pointHoverBackgroundColor: '#FFFFFF',
+                      pointHoverBorderColor: '#333',
+                      pointHoverBorderWidth: 3,
+                  },{
+                      label: 'Air Quality Inside (PPM)',
+                      fill: true,
+                      data: day4_AQIn30M,
+                      borderColor: 'rgba(63, 206, 134, .9)',
+                      borderWidth: 3,
+                      backgroundColor: 'rgba(63, 206, 134, .3)',
+                      pointHoverBackgroundColor: '#FFFFFF',
+                      pointHoverBorderColor: '#333',
+                      pointHoverBorderWidth: 3,
+                  }
+                ]
+              },
+              options: {
+                  scales: {
+                      yAxes: [{
+                          ticks: {
+                              beginAtZero:true,
+                              max: 1700,
+                              min: 200,
+                              stepSize: 50
+                          }
+                      }],
+                      xAxes: [{
+                        ticks: {
+                              autoSkip: true
+                          },
+                          gridLines: {
+                            display: false
+                          }
+                      }]
+                  },
+                  legend: {
+                    position: 'bottom',
+                    labels:{
+                      boxWidth: 15,
+                      fontSize: 15,
+                    },
+                  },
+              }
+          });
+
+//Charts Temp Day 4 in 30mins ----------------------------------
+var ctx = document.getElementById('Temp4D_hr').getContext('2d');
+    var Temp4D_hr = new Chart(ctx, {
+              type: 'line',
+              data: {
+                labels: day4_time30M,
+                  datasets: [{
+                      label: 'Temperature Outside (*C)',
+                      fill: true,
+                      data: day4_TempOut30M,
+                      borderColor: 'rgba(141, 141, 141, .9)', //grey
+                      borderWidth: 3,
+                      backgroundColor: 'rgba(141, 141, 141, .3)',
+                      pointHoverBackgroundColor: '#FFFFFF',
+                      pointHoverBorderColor: '#333',
+                      pointHoverBorderWidth: 3,
+                  },{
+                      label: 'Temperature Inside (*C)',
+                      fill: true,
+                      data: day4_TempIn30M,
+                      borderColor: 'rgba(199, 0, 57, .9)',  //red
+                      borderWidth: 3,
+                      backgroundColor: 'rgba(199, 0, 57, .3)',
+                      pointHoverBackgroundColor: '#FFFFFF',
+                      pointHoverBorderColor: '#333',
+                      pointHoverBorderWidth: 3,
+                  }
+                ]
+              },
+              options: {
+                  scales: {
+                      yAxes: [{
+                          ticks: {
+                              beginAtZero:true,
+                              max: 25,
+                              min: 0,
+                              stepSize: 1
+                          }
+                      }],
+                      xAxes: [{
+                        ticks: {
+                              autoSkip: true
+                          },
+                          gridLines: {
+                            display: false
+                          }
+                      }]
+                  },
+                  legend: {
+                    position: 'bottom',
+                    labels:{
+                      boxWidth: 15,
+                      fontSize: 15,
+                    },
+                  },
+              }
+          });
+
+//Charts Humidity Day 4 in 30mins ----------------------------------
+var ctx = document.getElementById('Hum4D_hr').getContext('2d');
+    var Hum4D_hr = new Chart(ctx, {
+              type: 'line',
+              data: {
+                labels: day4_time30M,
+                  datasets: [{
+                      label: 'Humidity Outside (%)',
+                      fill: true,
+                      data: day4_HumOut30M,
+                      borderColor: 'rgba(141, 141, 141, .9)', //grey
+                      borderWidth: 3,
+                      backgroundColor: 'rgba(141, 141, 141, .3)',
+                      pointHoverBackgroundColor: '#FFFFFF',
+                      pointHoverBorderColor: '#333',
+                      pointHoverBorderWidth: 3,
+                  },{
+                      label: 'Humidity Inside (%)',
+                      fill: true,
+                      data: day4_HumIn30M,
+                      borderColor: 'rgba(255, 195, 0, .9)', //yellow
+                      borderWidth: 3,
+                      backgroundColor: 'rgba(255, 195, 0, .3)',
+                      pointHoverBackgroundColor: '#FFFFFF',
+                      pointHoverBorderColor: '#333',
+                      pointHoverBorderWidth: 3,
+                  }
+                ]
+              },
+              options: {
+                  scales: {
+                      yAxes: [{
+                          ticks: {
+                              beginAtZero:true,
+                              max: 100,
+                              min: 0,
+                              stepSize: 10
+                          }
+                      }],
+                      xAxes: [{
+                        ticks: {
+                              autoSkip: true
+                          },
+                          gridLines: {
+                            display: false
+                          }
+                      }]
+                  },
+                  legend: {
+                    position: 'bottom',
+                    labels:{
+                      boxWidth: 15,
+                      fontSize: 15,
+                    },
+                  },
+              }
+          });
+
+////////////////////////////////////////////////////////////////////////
+
+//Charts Air Quality Day 5 in 30mins ----------------------------------
+var ctx = document.getElementById('AQ5D_hr').getContext('2d');
+    var AQ5D_hr = new Chart(ctx, {
+              type: 'line',
+              data: {
+                labels: day5_time30M,
+                  datasets: [{
+                      label: 'Air Quality Outside (PPM)',
+                      fill: true,
+                      data: day5_AQOut30M,
+                      borderColor: 'rgba(141, 141, 141, .9)',
+                      borderWidth: 3,
+                      backgroundColor: 'rgba(141, 141, 141, .3)', //grey
+                      pointHoverBackgroundColor: '#FFFFFF',
+                      pointHoverBorderColor: '#333',
+                      pointHoverBorderWidth: 3,
+                  },{
+                      label: 'Air Quality Inside (PPM)',
+                      fill: true,
+                      data: day5_AQIn30M,
+                      borderColor: 'rgba(63, 206, 134, .9)',
+                      borderWidth: 3,
+                      backgroundColor: 'rgba(63, 206, 134, .3)',
+                      pointHoverBackgroundColor: '#FFFFFF',
+                      pointHoverBorderColor: '#333',
+                      pointHoverBorderWidth: 3,
+                  }
+                ]
+              },
+              options: {
+                  scales: {
+                      yAxes: [{
+                          ticks: {
+                              beginAtZero:true,
+                              max: 1700,
+                              min: 200,
+                              stepSize: 50
+                          }
+                      }],
+                      xAxes: [{
+                        ticks: {
+                              autoSkip: true
+                          },
+                          gridLines: {
+                            display: false
+                          }
+                      }]
+                  },
+                  legend: {
+                    position: 'bottom',
+                    labels:{
+                      boxWidth: 15,
+                      fontSize: 15,
+                    },
+                  },
+              }
+          });
+
+//Charts Temp Day 5 in 30mins ----------------------------------
+var ctx = document.getElementById('Temp5D_hr').getContext('2d');
+    var Temp5D_hr = new Chart(ctx, {
+              type: 'line',
+              data: {
+                labels: day5_time30M,
+                  datasets: [{
+                      label: 'Temperature Outside (*C)',
+                      fill: true,
+                      data: day5_TempOut30M,
+                      borderColor: 'rgba(141, 141, 141, .9)', //grey
+                      borderWidth: 3,
+                      backgroundColor: 'rgba(141, 141, 141, .3)',
+                      pointHoverBackgroundColor: '#FFFFFF',
+                      pointHoverBorderColor: '#333',
+                      pointHoverBorderWidth: 3,
+                  },{
+                      label: 'Temperature Inside (*C)',
+                      fill: true,
+                      data: day5_TempIn30M,
+                      borderColor: 'rgba(199, 0, 57, .9)',  //red
+                      borderWidth: 3,
+                      backgroundColor: 'rgba(199, 0, 57, .3)',
+                      pointHoverBackgroundColor: '#FFFFFF',
+                      pointHoverBorderColor: '#333',
+                      pointHoverBorderWidth: 3,
+                  }
+                ]
+              },
+              options: {
+                  scales: {
+                      yAxes: [{
+                          ticks: {
+                              beginAtZero:true,
+                              max: 25,
+                              min: 0,
+                              stepSize: 1
+                          }
+                      }],
+                      xAxes: [{
+                        ticks: {
+                              autoSkip: true
+                          },
+                          gridLines: {
+                            display: false
+                          }
+                      }]
+                  },
+                  legend: {
+                    position: 'bottom',
+                    labels:{
+                      boxWidth: 15,
+                      fontSize: 15,
+                    },
+                  },
+              }
+          });
+
+//Charts Humidity Day 5 in 30mins ----------------------------------
+var ctx = document.getElementById('Hum5D_hr').getContext('2d');
+    var Hum5D_hr = new Chart(ctx, {
+              type: 'line',
+              data: {
+                labels: day5_time30M,
+                  datasets: [{
+                      label: 'Humidity Outside (%)',
+                      fill: true,
+                      data: day5_HumOut30M,
+                      borderColor: 'rgba(141, 141, 141, .9)', //grey
+                      borderWidth: 3,
+                      backgroundColor: 'rgba(141, 141, 141, .3)',
+                      pointHoverBackgroundColor: '#FFFFFF',
+                      pointHoverBorderColor: '#333',
+                      pointHoverBorderWidth: 3,
+                  },{
+                      label: 'Humidity Inside (%)',
+                      fill: true,
+                      data: day5_HumIn30M,
+                      borderColor: 'rgba(255, 195, 0, .9)', //yellow
+                      borderWidth: 3,
+                      backgroundColor: 'rgba(255, 195, 0, .3)',
+                      pointHoverBackgroundColor: '#FFFFFF',
+                      pointHoverBorderColor: '#333',
+                      pointHoverBorderWidth: 3,
+                  }
+                ]
+              },
+              options: {
+                  scales: {
+                      yAxes: [{
+                          ticks: {
+                              beginAtZero:true,
+                              max: 100,
+                              min: 0,
+                              stepSize: 10
+                          }
+                      }],
+                      xAxes: [{
+                        ticks: {
+                              autoSkip: true
+                          },
+                          gridLines: {
+                            display: false
+                          }
+                      }]
+                  },
+                  legend: {
+                    position: 'bottom',
+                    labels:{
+                      boxWidth: 15,
+                      fontSize: 15,
+                    },
+                  },
+              }
+          });
+
+////////////////////////////////////////////////////////////////////////
+
+//Charts Air Quality Day 6 in 30mins ----------------------------------
+var ctx = document.getElementById('AQ6D_hr').getContext('2d');
+    var AQ6D_hr = new Chart(ctx, {
+              type: 'line',
+              data: {
+                labels: day6_time30M,
+                  datasets: [{
+                      label: 'Air Quality Outside (PPM)',
+                      fill: true,
+                      data: day6_AQOut30M,
+                      borderColor: 'rgba(141, 141, 141, .9)',
+                      borderWidth: 3,
+                      backgroundColor: 'rgba(141, 141, 141, .3)', //grey
+                      pointHoverBackgroundColor: '#FFFFFF',
+                      pointHoverBorderColor: '#333',
+                      pointHoverBorderWidth: 3,
+                  },{
+                      label: 'Air Quality Inside (PPM)',
+                      fill: true,
+                      data: day6_AQIn30M,
+                      borderColor: 'rgba(63, 206, 134, .9)',
+                      borderWidth: 3,
+                      backgroundColor: 'rgba(63, 206, 134, .3)',
+                      pointHoverBackgroundColor: '#FFFFFF',
+                      pointHoverBorderColor: '#333',
+                      pointHoverBorderWidth: 3,
+                  }
+                ]
+              },
+              options: {
+                  scales: {
+                      yAxes: [{
+                          ticks: {
+                              beginAtZero:true,
+                              max: 1700,
+                              min: 200,
+                              stepSize: 50
+                          }
+                      }],
+                      xAxes: [{
+                        ticks: {
+                              autoSkip: true
+                          },
+                          gridLines: {
+                            display: false
+                          }
+                      }]
+                  },
+                  legend: {
+                    position: 'bottom',
+                    labels:{
+                      boxWidth: 15,
+                      fontSize: 15,
+                    },
+                  },
+              }
+          });
+
+//Charts Temp Day 6 in 30mins ----------------------------------
+var ctx = document.getElementById('Temp6D_hr').getContext('2d');
+    var Temp6D_hr = new Chart(ctx, {
+              type: 'line',
+              data: {
+                labels: day6_time30M,
+                  datasets: [{
+                      label: 'Temperature Outside (*C)',
+                      fill: true,
+                      data: day6_TempOut30M,
+                      borderColor: 'rgba(141, 141, 141, .9)', //grey
+                      borderWidth: 3,
+                      backgroundColor: 'rgba(141, 141, 141, .3)',
+                      pointHoverBackgroundColor: '#FFFFFF',
+                      pointHoverBorderColor: '#333',
+                      pointHoverBorderWidth: 3,
+                  },{
+                      label: 'Temperature Inside (*C)',
+                      fill: true,
+                      data: day6_TempIn30M,
+                      borderColor: 'rgba(199, 0, 57, .9)',  //red
+                      borderWidth: 3,
+                      backgroundColor: 'rgba(199, 0, 57, .3)',
+                      pointHoverBackgroundColor: '#FFFFFF',
+                      pointHoverBorderColor: '#333',
+                      pointHoverBorderWidth: 3,
+                  }
+                ]
+              },
+              options: {
+                  scales: {
+                      yAxes: [{
+                          ticks: {
+                              beginAtZero:true,
+                              max: 25,
+                              min: 0,
+                              stepSize: 1
+                          }
+                      }],
+                      xAxes: [{
+                        ticks: {
+                              autoSkip: true
+                          },
+                          gridLines: {
+                            display: false
+                          }
+                      }]
+                  },
+                  legend: {
+                    position: 'bottom',
+                    labels:{
+                      boxWidth: 15,
+                      fontSize: 15,
+                    },
+                  },
+              }
+          });
+
+//Charts Humidity Day 6 in 30mins ----------------------------------
+var ctx = document.getElementById('Hum6D_hr').getContext('2d');
+    var Hum6D_hr = new Chart(ctx, {
+              type: 'line',
+              data: {
+                labels: day6_time30M,
+                  datasets: [{
+                      label: 'Humidity Outside (%)',
+                      fill: true,
+                      data: day6_HumOut30M,
+                      borderColor: 'rgba(141, 141, 141, .9)', //grey
+                      borderWidth: 3,
+                      backgroundColor: 'rgba(141, 141, 141, .3)',
+                      pointHoverBackgroundColor: '#FFFFFF',
+                      pointHoverBorderColor: '#333',
+                      pointHoverBorderWidth: 3,
+                  },{
+                      label: 'Humidity Inside (%)',
+                      fill: true,
+                      data: day6_HumIn30M,
+                      borderColor: 'rgba(255, 195, 0, .9)', //yellow
+                      borderWidth: 3,
+                      backgroundColor: 'rgba(255, 195, 0, .3)',
+                      pointHoverBackgroundColor: '#FFFFFF',
+                      pointHoverBorderColor: '#333',
+                      pointHoverBorderWidth: 3,
+                  }
+                ]
+              },
+              options: {
+                  scales: {
+                      yAxes: [{
+                          ticks: {
+                              beginAtZero:true,
+                              max: 100,
+                              min: 0,
+                              stepSize: 10
+                          }
+                      }],
+                      xAxes: [{
+                        ticks: {
+                              autoSkip: true
+                          },
+                          gridLines: {
+                            display: false
+                          }
+                      }]
+                  },
+                  legend: {
+                    position: 'bottom',
+                    labels:{
+                      boxWidth: 15,
+                      fontSize: 15,
+                    },
+                  },
+              }
+          });
+
+////////////////////////////////////////////////////////////////////////
+
+//Charts Air Quality Day 7 in 30mins ----------------------------------
+var ctx = document.getElementById('AQ7D_hr').getContext('2d');
+    var AQ6D_hr = new Chart(ctx, {
+              type: 'line',
+              data: {
+                labels: day7_time30M,
+                  datasets: [{
+                      label: 'Air Quality Outside (PPM)',
+                      fill: true,
+                      data: day7_AQOut30M,
+                      borderColor: 'rgba(141, 141, 141, .9)',
+                      borderWidth: 3,
+                      backgroundColor: 'rgba(141, 141, 141, .3)', //grey
+                      pointHoverBackgroundColor: '#FFFFFF',
+                      pointHoverBorderColor: '#333',
+                      pointHoverBorderWidth: 3,
+                  },{
+                      label: 'Air Quality Inside (PPM)',
+                      fill: true,
+                      data: day7_AQIn30M,
+                      borderColor: 'rgba(63, 206, 134, .9)',
+                      borderWidth: 3,
+                      backgroundColor: 'rgba(63, 206, 134, .3)',
+                      pointHoverBackgroundColor: '#FFFFFF',
+                      pointHoverBorderColor: '#333',
+                      pointHoverBorderWidth: 3,
+                  }
+                ]
+              },
+              options: {
+                  scales: {
+                      yAxes: [{
+                          ticks: {
+                              beginAtZero:true,
+                              max: 1700,
+                              min: 200,
+                              stepSize: 50
+                          }
+                      }],
+                      xAxes: [{
+                        ticks: {
+                              autoSkip: true
+                          },
+                          gridLines: {
+                            display: false
+                          }
+                      }]
+                  },
+                  legend: {
+                    position: 'bottom',
+                    labels:{
+                      boxWidth: 15,
+                      fontSize: 15,
+                    },
+                  },
+              }
+          });
+
+//Charts Temp Day 7 in 30mins ----------------------------------
+var ctx = document.getElementById('Temp7D_hr').getContext('2d');
+    var Temp7D_hr = new Chart(ctx, {
+              type: 'line',
+              data: {
+                labels: day7_time30M,
+                  datasets: [{
+                      label: 'Temperature Outside (*C)',
+                      fill: true,
+                      data: day7_TempOut30M,
+                      borderColor: 'rgba(141, 141, 141, .9)', //grey
+                      borderWidth: 3,
+                      backgroundColor: 'rgba(141, 141, 141, .3)',
+                      pointHoverBackgroundColor: '#FFFFFF',
+                      pointHoverBorderColor: '#333',
+                      pointHoverBorderWidth: 3,
+                  },{
+                      label: 'Temperature Inside (*C)',
+                      fill: true,
+                      data: day7_TempIn30M,
+                      borderColor: 'rgba(199, 0, 57, .9)',  //red
+                      borderWidth: 3,
+                      backgroundColor: 'rgba(199, 0, 57, .3)',
+                      pointHoverBackgroundColor: '#FFFFFF',
+                      pointHoverBorderColor: '#333',
+                      pointHoverBorderWidth: 3,
+                  }
+                ]
+              },
+              options: {
+                  scales: {
+                      yAxes: [{
+                          ticks: {
+                              beginAtZero:true,
+                              max: 25,
+                              min: 0,
+                              stepSize: 1
+                          }
+                      }],
+                      xAxes: [{
+                        ticks: {
+                              autoSkip: true
+                          },
+                          gridLines: {
+                            display: false
+                          }
+                      }]
+                  },
+                  legend: {
+                    position: 'bottom',
+                    labels:{
+                      boxWidth: 15,
+                      fontSize: 15,
+                    },
+                  },
+              }
+          });
+
+//Charts Humidity Day 7 in 30mins ----------------------------------
+var ctx = document.getElementById('Hum7D_hr').getContext('2d');
+    var Hum7D_hr = new Chart(ctx, {
+              type: 'line',
+              data: {
+                labels: day7_time30M,
+                  datasets: [{
+                      label: 'Humidity Outside (%)',
+                      fill: true,
+                      data: day7_HumOut30M,
+                      borderColor: 'rgba(141, 141, 141, .9)', //grey
+                      borderWidth: 3,
+                      backgroundColor: 'rgba(141, 141, 141, .3)',
+                      pointHoverBackgroundColor: '#FFFFFF',
+                      pointHoverBorderColor: '#333',
+                      pointHoverBorderWidth: 3,
+                  },{
+                      label: 'Humidity Inside (%)',
+                      fill: true,
+                      data: day7_HumIn30M,
+                      borderColor: 'rgba(255, 195, 0, .9)', //yellow
+                      borderWidth: 3,
+                      backgroundColor: 'rgba(255, 195, 0, .3)',
+                      pointHoverBackgroundColor: '#FFFFFF',
+                      pointHoverBorderColor: '#333',
+                      pointHoverBorderWidth: 3,
+                  }
+                ]
+              },
+              options: {
+                  scales: {
+                      yAxes: [{
+                          ticks: {
+                              beginAtZero:true,
+                              max: 100,
+                              min: 0,
+                              stepSize: 10
+                          }
+                      }],
+                      xAxes: [{
+                        ticks: {
+                              autoSkip: true
+                          },
+                          gridLines: {
+                            display: false
+                          }
+                      }]
+                  },
+                  legend: {
+                    position: 'bottom',
+                    labels:{
+                      boxWidth: 15,
+                      fontSize: 15,
+                    },
+                  },
+              }
+          });
+
+//-----------------------------------------------------------------
+//-----------------------------------------------------------------
+//-----------------------------------------------------------------
+
+//Charts Air Quality Week in Days ----------------------------------
+var ctx = document.getElementById('AQ1W_d').getContext('2d');
+    var AQ1W_d = new Chart(ctx, {
+              type: 'line',
+              data: {
+                  labels: ['Friday - January 3, 2020','Saturday - January 4, 2020','Sunday - January 5, 2020','Monday - January 6, 2020','Tuesday - January 7, 2020','Wednesday - January 8, 2020','Thursday - January 9, 2020','Friday - January 10, 2020'],
+                  datasets: [{
+                      label: 'Air Quality Outside (PPM)',
+                      fill: true,
+                      data: newAQ_Out_avg1D,
+                      borderColor: 'rgba(141, 141, 141, .9)',
+                      borderWidth: 3,
+                      backgroundColor: 'rgba(141, 141, 141, .3)', //grey
+                      pointHoverBackgroundColor: '#FFFFFF',
+                      pointHoverBorderColor: '#333',
+                      pointHoverBorderWidth: 3,
+                  },{
+                      label: 'Air Quality Inside (PPM)',
+                      fill: true,
+                      data: newAQ_In_avg1D,
+                      borderColor: 'rgba(63, 206, 134, .9)',
+                      borderWidth: 3,
+                      backgroundColor: 'rgba(63, 206, 134, .3)',
+                      pointHoverBackgroundColor: '#FFFFFF',
+                      pointHoverBorderColor: '#333',
+                      pointHoverBorderWidth: 3,
+                  }
+                ]
+              },
+              options: {
+                  scales: {
+                      yAxes: [{
+                          ticks: {
+                              beginAtZero:true,
+                              max: 1700,
+                              min: 200,
+                              stepSize: 50
+                          }
+                      }],
+                      xAxes: [{
+                        ticks: {
+                              autoSkip: true
+                          },
+                          gridLines: {
+                            display: false
+                          }
+                      }]
+                  },
+                  legend: {
+                    position: 'bottom',
+                    labels:{
+                      boxWidth: 15,
+                      fontSize: 15,
+                    },
+                  },
+              }
+          });
+//Charts Temp Week in Days ----------------------------------
+var ctx = document.getElementById('Temp1W_d').getContext('2d');
+    var Temp1W_d = new Chart(ctx, {
+              type: 'line',
+              data: {
+                labels: ['Friday - January 3, 2020','Saturday - January 4, 2020','Sunday - January 5, 2020','Monday - January 6, 2020','Tuesday - January 7, 2020','Wednesday - January 8, 2020','Thursday - January 9, 2020','Friday - January 10, 2020'],
+                  datasets: [{
+                      label: 'Temperature Outside (*C)',
+                      fill: true,
+                      data: newTemp_Out_avg1D,
+                      borderColor: 'rgba(141, 141, 141, .9)', //grey
+                      borderWidth: 3,
+                      backgroundColor: 'rgba(141, 141, 141, .3)',
+                      pointHoverBackgroundColor: '#FFFFFF',
+                      pointHoverBorderColor: '#333',
+                      pointHoverBorderWidth: 3,
+                  },{
+                      label: 'Temperature Inside (*C)',
+                      fill: true,
+                      data: newTemp_In_avg1D,
+                      borderColor: 'rgba(199, 0, 57, .9)',  //red
+                      borderWidth: 3,
+                      backgroundColor: 'rgba(199, 0, 57, .3)',
+                      pointHoverBackgroundColor: '#FFFFFF',
+                      pointHoverBorderColor: '#333',
+                      pointHoverBorderWidth: 3,
+                  }
+                ]
+              },
+              options: {
+                  scales: {
+                      yAxes: [{
+                          ticks: {
+                              beginAtZero:true,
+                              max: 25,
+                              min: 0,
+                              stepSize: 1
+                          }
+                      }],
+                      xAxes: [{
+                        ticks: {
+                              autoSkip: true
+                          },
+                          gridLines: {
+                            display: false
+                          }
+                      }]
+                  },
+                  legend: {
+                    position: 'bottom',
+                    labels:{
+                      boxWidth: 15,
+                      fontSize: 15,
+                    },
+                  },
+              }
+          });
+
+//Charts Humidity Week in Days ----------------------------------
+var ctx = document.getElementById('Hum1W_d').getContext('2d');
+    var Hum1W_d = new Chart(ctx, {
+              type: 'line',
+              data: {
+                labels: ['Friday - January 3, 2020','Saturday - January 4, 2020','Sunday - January 5, 2020','Monday - January 6, 2020','Tuesday - January 7, 2020','Wednesday - January 8, 2020','Thursday - January 9, 2020','Friday - January 10, 2020'],
+                  datasets: [{
+                      label: 'Humidity Outside (%)',
+                      fill: true,
+                      data: newHum_Out_avg1D,
+                      borderColor: 'rgba(141, 141, 141, .9)', //grey
+                      borderWidth: 3,
+                      backgroundColor: 'rgba(141, 141, 141, .3)',
+                      pointHoverBackgroundColor: '#FFFFFF',
+                      pointHoverBorderColor: '#333',
+                      pointHoverBorderWidth: 3,
+                  },{
+                      label: 'Humidity Inside (%)',
+                      fill: true,
+                      data: newHum_In_avg1D,
+                      borderColor: 'rgba(255, 195, 0, .9)', //yellow
+                      borderWidth: 3,
+                      backgroundColor: 'rgba(255, 195, 0, .3)',
+                      pointHoverBackgroundColor: '#FFFFFF',
+                      pointHoverBorderColor: '#333',
+                      pointHoverBorderWidth: 3,
+                  }
+                ]
+              },
+              options: {
+                  scales: {
+                      yAxes: [{
+                          ticks: {
+                              beginAtZero:true,
+                              max: 100,
+                              min: 0,
+                              stepSize: 10
+                          }
+                      }],
+                      xAxes: [{
+                        ticks: {
+                              autoSkip: true
+                          },
+                          gridLines: {
+                            display: false
+                          }
+                      }]
+                  },
+                  legend: {
+                    position: 'bottom',
+                    labels:{
+                      boxWidth: 15,
+                      fontSize: 15,
+                    },
+                  },
+              }
+            });
+        });
+  });
+  </script>
+
+<!-- Script for Vertical Tabs -->
+<script>
+  function openTab(evt, tabName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " active";
+  }
+  
+  // Get the element with id="defaultOpen" and click on it
+  document.getElementById("defaultOpen").click();
+</script>
+
+<!-- Script for Horizontal Tabs -->
+<script>
+  function openHTabs(evt, hTab) {
+    var i, htabcontent, htablinks;
+    htabcontent = document.getElementsByClassName("htabcontent");
+    for (i = 0; i < htabcontent.length; i++) {
+      htabcontent[i].style.display = "none";
+    }
+    htablinks = document.getElementsByClassName("htablinks");
+    for (i = 0; i < htablinks.length; i++) {
+      htablinks[i].className = htablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(hTab).style.display = "block";
+    evt.currentTarget.className += " active";
+  }
+  </script>
+</div>
+
+<div id="bottom">
+  <button class="headblock">Live Data Monitoring</button>
+    <h3> Real-time Graphs on Air Quality & Context </h3>
+    <p>Here you can visualize the real-time data from the last 3hrs</p>
+            <div class="svtab">
+              <button class="svtablinks" onclick="opensvTab(event, 'AQ')" id="defaultOpen">Live Air Quality</button>
+              <button class="svtablinks" onclick="opensvTab(event, 'Temp')">Live Temperature</button>
+              <button class="svtablinks" onclick="opensvTab(event, 'Hum')">Live Humidity</button>
+            </div>
+
+            <div id="AQ" class="svtabcontent">
+              <h4>Air Quality (PPM)</h4>
+              <canvas id="AQLive" width="800" height="600"></canvas>
+            </div>
+
+            <div id="Temp" class="svtabcontent">
+              <h4>Temperature (*C)</h4>
+              <canvas id="TempLive" width="800" height="600"></canvas>
+            </div>
+
+            <div id="Hum" class="svtabcontent">
+              <h4>Humidity (%)</h4>
+              <canvas id="HumLive" width="800" height="600"></canvas>
+            </div>
+
+    
+
+    <script>
+      $(function(){
+      var sheetUrl = 'https://spreadsheets.google.com/feeds/cells/10zDDvXppl4g0pgKxvKoFc9DZtFC5knse__5Lb78Xs1s/1/public/full?alt=json';
+      $.getJSON(sheetUrl, function(data){
+
+        var entry = data.feed.entry;
+        var live_timestamp = []; // the leftmost column of the Google Sheets
+        var live_AQPPM_Out = []; // third-left column
+        var live_Temp_Out = []; // fourth-left column
+        var live_Hum_Out = []; // fifth-left column
+        var live_AQPPM_In = []; // seventh-left column
+        var live_Temp_In = []; // eight-left column
+        var live_Hum_In = []; // last column
+
+        var last1620 = entry.length - 1620;
+
+        //FIFO for a maximum n of elements per array of 180
+        
+        for (var i = last1620; i < entry.length; i += 9){
+            if (entry.length >= 1621) {  //3 hrs, as data points are generated every minute
+                entry.shift();
+                live_timestamp.push(entry[i].content.$t);
+                live_AQPPM_Out.push(entry[i+2].content.$t);
+                live_Temp_Out.push(entry[i+3].content.$t);
+                live_Hum_Out.push(entry[i+4].content.$t);
+                live_AQPPM_In.push(entry[i+6].content.$t);
+                live_Temp_In.push(entry[i+7].content.$t);
+                live_Hum_In.push(entry[i+8].content.$t);
+            } else {
+                live_timestamp.push(entry[i].content.$t);
+                live_AQPPM_Out.push(entry[i+2].content.$t);
+                live_Temp_Out.push(entry[i+3].content.$t);
+                live_Hum_Out.push(entry[i+4].content.$t);
+                live_AQPPM_In.push(entry[i+6].content.$t);
+                live_Temp_In.push(entry[i+7].content.$t);
+                live_Hum_In.push(entry[i+8].content.$t);
+            }};
+
+      // Converting strg to numbers ----------------------------------
+          var live_newAQ_Out = live_AQPPM_Out.map(Number);
+          var live_newTemp_Out = live_Temp_Out.map(Number);
+          var live_newHum_Out = live_Hum_Out.map(Number);
+          var live_newAQ_In = live_AQPPM_In.map(Number);
+          var live_newTemp_In = live_Temp_In.map(Number);
+          var live_newHum_In = live_Hum_In.map(Number);
+          
+      // Function to Slice Arrays ----------------------------------
+      function chunkArray(myArray, chunk_size){
+          var index = 0;
+          var arrayLength = myArray.length;
+          var tempArray = [];
+          
+          for (index = 0; index < arrayLength; index += chunk_size) {
+              myChunk = myArray.slice(index, index+chunk_size);
+              // Do something if you want with the group
+              tempArray.push(myChunk);
+          }
+          return tempArray;
+      }
+
+      // Function to return the 1st timestamp of each subarray -----------------
+      function getFirst(myArray){
+          var index = 0;
+          var arrayLength = myArray.length;
+          var tempArray = [];
+
+          for (index = 0; index < arrayLength; index += 1) {
+              first = myArray[index][0]
+              tempArray.push(first);
+            
+              }
+          
+          return tempArray;
+      }
+
+      // Function to Sum All Elements in Array -----------------------
+      function total(input){
+        var myTotal = 0;  // Variable to hold your total
+        for(var i = 0, len = input.length; i < len; i++) {
+            myTotal += input[i];  // Iterate over your first array and then grab the second element add the values up
+        }
+        return myTotal;
+      }
+
+
+      // Function to return avg value of array elements -----------------
+      function avgArray(myArray){
+          var index = 0;
+          var arrayLength = myArray.length;
+          var tempArray = [];
+
+          for (index = 0; index < arrayLength; index += 1) {
+              sum = total(myArray[index])
+              var subarrayLength = myArray[index].length;
+              avg = sum/subarrayLength;
+              tempArray.push(avg);
+            
+              }
+          
+          return tempArray;
+      }
+
+      // Slicing Arrays ----------------------------------
+      // Make clusters of 5 mins ----------------------------------------
+      var live_timestamp_5M = chunkArray(live_timestamp, 5);
+      var live_newAQ_Out_5M = chunkArray(live_newAQ_Out, 5);
+      var live_newTemp_Out_5M = chunkArray(live_newTemp_Out, 5);
+      var live_newHum_Out_5M = chunkArray(live_newHum_Out, 5);
+      var live_newAQ_In_5M = chunkArray(live_newAQ_In, 5);
+      var live_newTemp_In_5M = chunkArray(live_newTemp_In, 5);
+      var live_newHum_In_5M = chunkArray(live_newHum_In, 5);
+
+      // Avg
+      var live_timestamp_avg5M = getFirst(live_timestamp_5M);
+      var live_newAQ_Out_avg5M = avgArray(live_newAQ_Out_5M);
+      var live_newTemp_Out_avg5M = avgArray(live_newTemp_Out_5M);
+      var live_newHum_Out_avg5M = avgArray(live_newHum_Out_5M);
+      var live_newAQ_In_avg5M = avgArray(live_newAQ_In_5M);
+      var live_newTemp_In_avg5M = avgArray(live_newTemp_In_5M);
+      var live_newHum_In_avg5M = avgArray(live_newHum_In_5M);
+
+      console.log(live_timestamp_5M)
+      console.log(live_newAQ_Out_5M)
+      console.log(live_newAQ_Out_avg5M)
+      console.log(live_timestamp_avg5M)
+    
+//Charts Air Quality 1HR in Mins ----------------------------------
+    var ctx = document.getElementById('AQLive').getContext('2d');
+    var AQLive = new Chart(ctx, {
+              type: 'line',
+              data: {
+                  labels: live_timestamp_avg5M,
+                  datasets: [{
+                      label: 'Air Quality Outside (PPM)',
+                      fill: true,
+                      data: live_newAQ_Out_avg5M,
+                      borderColor: 'rgba(141, 141, 141, .9)', //grey
+                      borderWidth: 3,
+                      backgroundColor: 'rgba(141, 141, 141, .3)',
+                      pointHoverBackgroundColor: '#FFFFFF',
+                      pointHoverBorderColor: '#333',
+                      pointHoverBorderWidth: 3,
+                  },{
+                      label: 'Air Quality Inside (PPM)',
+                      fill: true,
+                      data: live_newAQ_In_avg5M,
+                      borderColor: 'rgba(63, 206, 134, .9)',  //green
+                      borderWidth: 3,
+                      backgroundColor: 'rgba(63, 206, 134, .3)',
+                      pointHoverBackgroundColor: '#FFFFFF',
+                      pointHoverBorderColor: '#333',
+                      pointHoverBorderWidth: 3,
+                  }
+                ]
+              },
+              options: {
+                  scales: {
+                      yAxes: [{
+                          ticks: {
+                              beginAtZero:true,
+                              max: 1700,
+                              min: 200,
+                              stepSize: 50
+                          }
+                      }],
+                      xAxes: [{
+                          ticks: {
+                              autoSkip: true
+                          },
+                          gridLines: {
+                            display: false
+                          }
+                      }]
+                  },
+                  legend: {
+                    position: 'bottom',
+                    labels:{
+                      boxWidth: 15,
+                      fontSize: 15,
+                    },
+                  },
+              }
+          });
+//Charts Temp 1HR in Mins ----------------------------------
+var ctx = document.getElementById('TempLive').getContext('2d');
+    var TempLive = new Chart(ctx, {
+              type: 'line',
+              data: {
+                  labels: live_timestamp_avg5M,
+                  datasets: [{
+                      label: 'Temperature Outside (*C)',
+                      fill: true,
+                      data: live_newTemp_Out_avg5M,
+                      borderColor: 'rgba(141, 141, 141, .9)', //grey
+                      borderWidth: 3,
+                      backgroundColor: 'rgba(141, 141, 141, .3)',
+                      pointHoverBackgroundColor: '#FFFFFF',
+                      pointHoverBorderColor: '#333',
+                      pointHoverBorderWidth: 3,
+                  },{
+                      label: 'Temperature Inside (*C)',
+                      fill: true,
+                      data: live_newTemp_In_avg5M,
+                      borderColor: 'rgba(199, 0, 57, .9)',  //red
+                      borderWidth: 3,
+                      backgroundColor: 'rgba(199, 0, 57, .3)',
+                      pointHoverBackgroundColor: '#FFFFFF',
+                      pointHoverBorderColor: '#333',
+                      pointHoverBorderWidth: 3,
+                  }
+                ]
+              },
+              options: {
+                  scales: {
+                      yAxes: [{
+                          ticks: {
+                              beginAtZero:true,
+                              max: 25,
+                              min: 0,
+                              stepSize: 1
+                          }
+                      }],
+                      xAxes: [{
+                        ticks: {
+                              autoSkip: true
+                          },
+                          gridLines: {
+                            display: false
+                          }
+                      }]
+                  },
+                  legend: {
+                    position: 'bottom',
+                    labels:{
+                      boxWidth: 15,
+                      fontSize: 15,
+                    },
+                  },
+              }
+          });
+
+//Charts Hum 1HR in Mins ----------------------------------
+var ctx = document.getElementById('HumLive').getContext('2d');
+    var HumLive = new Chart(ctx, {
+              type: 'line',
+              data: {
+                  labels: live_timestamp_avg5M,
+                  datasets: [{
+                      label: 'Humidity Outside (%)',
+                      fill: true,
+                      data: live_newHum_Out_avg5M,
+                      borderColor: 'rgba(141, 141, 141, .9)', //grey
+                      borderWidth: 3,
+                      backgroundColor: 'rgba(141, 141, 141, .3)',
+                      pointHoverBackgroundColor: '#FFFFFF',
+                      pointHoverBorderColor: '#333',
+                      pointHoverBorderWidth: 3,
+                  },{
+                      label: 'Humidity Inside (%)',
+                      fill: true,
+                      data: live_newHum_In_avg5M,
+                      borderColor: 'rgba(255, 195, 0, .9)', //yellow
+                      borderWidth: 3,
+                      backgroundColor: 'rgba(255, 195, 0, .3)',
+                      pointHoverBackgroundColor: '#FFFFFF',
+                      pointHoverBorderColor: '#333',
+                      pointHoverBorderWidth: 3,
+                  }
+                ]
+              },
+              options: {
+                  scales: {
+                      yAxes: [{
+                          ticks: {
+                              beginAtZero:true,
+                              max: 100,
+                              min: 0,
+                              stepSize: 10
+                          }
+                      }],
+                      xAxes: [{
+                        ticks: {
+                              autoSkip: true
+                          },
+                          gridLines: {
+                            display: false
+                          }
+                      }]
+                  },
+                  legend: {
+                    position: 'bottom',
+                    labels:{
+                      boxWidth: 15,
+                      fontSize: 15,
+                    },
+                  },
+              }
+          });
+        });
+  });
+  
+</script>
+
+<!-- Script for Vertical Tabs -->
+<script>
+  function opensvTab(evt, tabName) {
+    var i, svtabcontent, svtablinks;
+    svtabcontent = document.getElementsByClassName("svtabcontent");
+    for (i = 0; i < svtabcontent.length; i++) {
+      svtabcontent[i].style.display = "none";
+    }
+    svtablinks = document.getElementsByClassName("svtablinks");
+    for (i = 0; i < svtablinks.length; i++) {
+      svtablinks[i].className = svtablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " active";
+  }
+  
+  // Get the element with id="defaultOpen" and click on it
+  document.getElementById("defaultOpen").click();
+</script>
+</div>
+</body>
+</html>
