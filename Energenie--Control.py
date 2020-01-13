@@ -32,4 +32,10 @@ GPIO.output (22, D1)
 GPIO.output (17, D0)
  
 # Enable the modulator
-GPIO.output (25, True)
+def En_ON(){
+   GPIO.output (25, True)
+}
+
+def En_OFF(){
+   GPIO.output (25, False)
+}
