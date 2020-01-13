@@ -31,14 +31,5 @@ GPIO.output (23, D2)
 GPIO.output (22, D1)
 GPIO.output (17, D0)
  
-# Let it settle, encoder requires this
-time.sleep(0.1)
- 
 # Enable the modulator
 GPIO.output (25, True)
- 
-# Keep enabled for a period
-time.sleep(0.25)
- 
-# Disable the modulator
-GPIO.output (25, False)
