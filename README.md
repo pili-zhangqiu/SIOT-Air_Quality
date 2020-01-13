@@ -1,5 +1,9 @@
 **Sensing & IoT - Air Quality Device Project**
+Main Scripts: GLog.py && index.html
 
+This project aims to explore the benefits of IoT home devices to better inform and encourage users to move towards a healthier lifestyle. This can be done through web app that visualizes different real-time graphs on air quality. From this UI, the user can appreciate the big difference between indoors and outdoors air quality and it can alert the user of when they should, for instance, open the window.
+
+**Links of interest**
 oauth2client (solved https://oauth2client.readthedocs.io/en/latest/)
 
 ADS1x15 (https://learn.adafruit.com/raspberry-pi-analog-to-digital-converters/ads1015-slash-ads1115)
@@ -7,13 +11,5 @@ ADS1x15 (https://learn.adafruit.com/raspberry-pi-analog-to-digital-converters/ad
 GoogleAP
 -Spreadsheet Tutorial: http://www.whatimade.today/log-sensor-data-straight-to-google-sheets-from-a-raspberry-pi-zero-all-the-python-code/?fbclid=IwAR1KB3eKgikrl87bONCU7gI7-nIvOin2d264GQd-ZP2u1ZJhFzjey_ScrU4
 
-Python versions (https://linuxconfig.org/change-default-python-version-on-raspbian-gnu-linux)
-
-PPM Calculations: https://community.particle.io/t/mq135-co2-ppm-calculation/24061
-
 CO2 levels guide: https://www.engineeringtoolbox.com/co2-comfort-level-d_1024.html
 
-Vout = analogRead();
-Rs = RL * (6204.5 - Vout) / Vout;
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
