@@ -4,7 +4,8 @@ Main Scripts: GLog.py && index.html
 
 This project aims to explore the benefits of IoT home devices to better inform and encourage users to move towards a healthier lifestyle. This can be done through web app that visualizes different real-time graphs on air quality. From this UI, the user can appreciate the big difference between indoors and outdoors air quality and it can alert the user of when they should, for instance, open the window.
 
-**Links of interest**
+
+**Links of interest:**
 
 oauth2client (solved https://oauth2client.readthedocs.io/en/latest/)
 
