@@ -1,4 +1,4 @@
-** Web app**
+**Web app**
 
 This web app displays the data in the form of Chart JS graphs. To run this file, Apache (web server software) was used.
 
