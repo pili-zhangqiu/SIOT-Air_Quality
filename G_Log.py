@@ -15,6 +15,9 @@ from DHT22_read import DHTread
 # Import the library calculating PPM values for the MQ135
 from MQ135_Calibrate import MQ135_Values
 
+# Import the library to control Energenie
+from Energenie_Control import En_ON, En_OFF
+
 def main():  
   
     #while True:
@@ -47,6 +50,12 @@ def main():
         print ('-' *30)
 
         update_sheet("Sheet1", ADC0, c_PPM0, ADC1, c_PPM1, DHT_t0, DHT_h0, DHT_t1, DHT_h1)
+        
+        if c_PPM0 > 500:
+          En_ON()
+          else
+          En_OFF()
+          
        # time.sleep(60)
 
 if __name__ == '__main__':  
