@@ -2620,8 +2620,7 @@ var ctx = document.getElementById('Hum1W_d').getContext('2d');
 
         var last1620 = entry.length - 1620;
 
-        //FIFO for a maximum n of elements per array of 180
-        
+      
         for (var i = last1620; i < entry.length; i += 9){
             if (entry.length >= 1621) {  //3 hrs, as data points are generated every minute
                 entry.shift();
