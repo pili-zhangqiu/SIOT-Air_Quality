@@ -29,27 +29,6 @@ def update_sheet(sheetname, AirQy0, PPM0, AirQy1, PPM1, temp0, hum0, temp1, hum1
 
     # My Spreadsheet ID ... See google documentation on how to derive this
     MY_SPREADSHEET_ID = '1x-PEGT76a5Roh4-HkeA8lpDTRqaZw-RSTeOhviL27ys'
-
-    '''
-    # authentication, authorization step
-    creds = None
-
-    if os.path.exists('token.pickle'):
-        with open('token.pickle', 'rb') as token:
-            creds = pickle.load(token)
-            
-    # If there are no (valid) credentials available, let the user log in.
-    if not creds or not creds.valid:
-        if creds and creds.expired and creds.refresh_token:
-            creds.refresh(Request())
-        else:
-            flow = InstalledAppFlow.from_client_secrets_file(
-                'credentials.json', SCOPES)
-            creds = flow.run_local_server(port=0)
-        # Save the credentials for the next run
-        with open('token.pickle', 'wb') as token:
-            pickle.dump(creds, token)
-    '''
     
     service = build('sheets', 'v4', http=creds.authorize(Http()))
     # service = build('sheets', 'v4', credentials=creds)
