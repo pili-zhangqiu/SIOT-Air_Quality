@@ -24,5 +24,5 @@ The **main files** are:
     - This web app displays the data in the form of Chart JS graphs. To run this file, Apache (web server software) was used.
     - Here is a video showcasing the WebApp functionalities:
  
-[<img src= "https://github.com/pili-zhangqiu/SIOT-Air_Quality/blob/master/img/LinkVideo.PNG" width="500">](https://vimeo.com/680045192)
+    [<img src= "https://github.com/pili-zhangqiu/SIOT-Air_Quality/blob/master/img/LinkVideo.PNG" width="900">](https://vimeo.com/680045192)
 
