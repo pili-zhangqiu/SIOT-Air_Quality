@@ -11,20 +11,16 @@ The **main files** are:
     - **Air quality**:
       - ADS1x15_read.py: Data from the MQ-135 sensor (air quality sensor) is received through ADC.
       - MQ135_Calibrate.py: Calibrates the PPM air quality data received. You can learn more about CO2 levels [here](https://www.engineeringtoolbox.com/co2-comfort-level-d_1024.html)
-
     - **Actuator**:
       - Energenie_Control.py: Turns on the air purifier if the air quality reaches a threshold
 ![CircuitDiagram](https://github.com/pili-zhangqiu/SIOT-Air_Quality/blob/master/img/CircuitDiagram.jpg)
-
 - **Google_Data_Recorder folder**: contains the necessary scripts to write data from the sensors to an online Google Sheets-
-    -  Main Script: GLog.py
+    -  **Main Script**: GLog.py
     -  **Please, bear in mind that you will need to retrieve your _client_secret.json_ file**. Due to confidentiality reasons, this file is not displayed in this Github.
-    -  **Links of interest:**
-        - Spreadsheet Tutorial: http://www.whatimade.today/log-sensor-data-straight-to-google-sheets-from-a-raspberry-pi-zero-all-the-python-code/?fbclid=IwAR1KB3eKgikrl87bONCU7gI7-nIvOin2d264GQd-ZP2u1ZJhFzjey_ScrU4
-        - oauth2client (solved https://oauth2client.readthedocs.io/en/latest/)
+    -  **Links of interest:** [Spreadsheet Tutorial](http://www.whatimade.today/log-sensor-data-straight-to-google-sheets-from-a-raspberry-pi-zero-all-the-python-code/?fbclid=IwAR1KB3eKgikrl87bONCU7gI7-nIvOin2d264GQd-ZP2u1ZJhFzjey_ScrU4), [oauth2client](https://oauth2client.readthedocs.io/en/latest/)
        
 - **WebApp folder**: contains the webapp script, controlling both the data visualisation and backend data retrieval from the Google Sheet.
-    - Main Script: index.html
+    - **Main Script**: index.html
     - This web app displays the data in the form of Chart JS graphs. To run this file, Apache (web server software) was used.
     - Here is a video showcasing the WebApp functionalities:
  
